@@ -1,0 +1,6 @@
+{
+  "name": "I Ching - Libro de las Mutaciones",
+  "description": "Oráculo tradicional del I Ching mediante el método de las tres monedas. Generación con entropía criptográfica, los 64 hexagramas completos con juicio, imagen y líneas mutantes, hexagrama derivado e historial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
