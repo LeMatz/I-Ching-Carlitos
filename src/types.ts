@@ -23,6 +23,11 @@ export interface TrigramInfo {
   nature: string; // Firmeza, Movimiento, Profundidad, etc.
   symbol: string; // ☰
   lines: [0 | 1, 0 | 1, 0 | 1]; // bottom to top (1=yang, 0=yin)
+  family: string; // Familia (Padre, Madre, Hijo mayor, etc.)
+  direction: string; // Dirección cardinal tradicional
+  season: string; // Estación del año
+  animal: string; // Animal arquetípico
+  bodyPart: string; // Parte del cuerpo asociada
 }
 
 export interface HexagramData {
@@ -34,9 +39,18 @@ export interface HexagramData {
   upperTrigram: string; // "Cielo"
   lowerTrigram: string; // "Cielo"
   binaryKey: string; // 6 bits from line 1 to 6 e.g. "111111"
-  judgment: string; // Dictamen / Juicio (Tuàn)
-  image: string; // La Imagen (Xiàng)
+  judgment: string; // Dictamen / Juicio (Tuàn • 彖)
+  image: string; // La Gran Imagen (Dà Xiàng • 大象)
   lines: [string, string, string, string, string, string]; // Line 1 to 6 interpretations
+  tuanCommentary?: string; // Comentario al Juicio (Tuàn Zhuàn • 彖傳)
+  lineImages?: [string, string, string, string, string, string]; // Imagen breve de cada línea (Xiǎo Xiàng • 小象)
+  canonicalExtra?: {
+    title: string; // e.g. "用九 (Yòng Jiǔ - Al usar los nueves)"
+    chinese: string; // 用九 / 用六
+    text: string; // "见群龙无首，吉。" / "利永贞。"
+    meaning: string;
+  };
+  wenyanCommentary?: string; // Comentario a las palabras (Wényán Zhuàn • 文言傳) para hexagramas 1 y 2
 }
 
 export interface ConsultationRecord {
@@ -47,4 +61,6 @@ export interface ConsultationRecord {
   primaryHexagramNumber: number;
   derivedHexagramNumber?: number;
   mutatingLinePositions: number[]; // 1 to 6
+  userNote?: string;
+  isProtected?: boolean;
 }

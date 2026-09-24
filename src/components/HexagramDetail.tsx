@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HexagramDrawing } from './HexagramDrawing';
+import { TrigramCalligraphy } from './TrigramCalligraphy';
 import { HexagramData, HexagramLine } from '../types';
 import { TRIGRAMS } from '../data/trigrams';
 import { getRecommendedAttitude } from '../data/attitudes';
@@ -41,16 +42,10 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
   );
 
   // Collapsible dropdown states for results view
-  const [isQuickSummaryOpen, setIsQuickSummaryOpen] = useState(true);
+  const [isQuickSummaryOpen, setIsQuickSummaryOpen] = useState(false);
   const [isTrigramsOpen, setIsTrigramsOpen] = useState(true);
   const [isImageOpen, setIsImageOpen] = useState(true);
   const [isMutationsOpen, setIsMutationsOpen] = useState(true);
-  const [isAllLinesOpen, setIsAllLinesOpen] = useState(true);
-
-  // When switching tabs between primary and derived, scroll view to top
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab]);
 
   const isViewingDerived = Boolean(activeTab === 'derived' && derivedHexagram);
   const currentHexagram = isViewingDerived && derivedHexagram ? derivedHexagram : primaryHexagram;
@@ -201,10 +196,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
       {derivedHexagram && (
         <div className="w-full bg-[#16161D] p-1.5 rounded-xl border border-[#272733] flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2">
           <button
-            onClick={() => {
-              setActiveTab('primary');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onClick={() => setActiveTab('primary')}
             className={`w-full sm:w-auto flex-1 px-4 py-2.5 rounded-lg font-serif text-xs sm:text-sm font-bold flex items-center justify-between sm:justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'primary'
                 ? 'bg-[#FF6B2B] text-[#0A0A0D] shadow-md shadow-[#FF6B2B]/20'
@@ -226,10 +218,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
           </div>
 
           <button
-            onClick={() => {
-              setActiveTab('derived');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onClick={() => setActiveTab('derived')}
             className={`w-full sm:w-auto flex-1 px-4 py-2.5 rounded-lg font-serif text-xs sm:text-sm font-bold flex items-center justify-between sm:justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'derived'
                 ? 'bg-[#FF6B2B] text-[#0A0A0D] shadow-md shadow-[#FF6B2B]/20'
@@ -296,12 +285,16 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             onSelectLine={(pos) => setSelectedLinePos(pos)}
             size="md"
             isDerived={isViewingDerived}
+            hexagramNumber={currentHexagram.number}
+            hexagramName={currentHexagram.nameEs}
+            lineMeanings={currentHexagram.lines}
+            mutatingLinePositions={!isViewingDerived ? mutatingLinePositions : []}
           />
 
           {/* Hint to click lines */}
           <p className="text-[11px] text-[#A1A1B0] mt-3 flex items-center gap-1.5 text-center">
             <Info className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
-            Toca una línea del dibujo para ver su significado exacto
+            Toca cualquier línea del dibujo para abrir su significado en una ventana flotante
           </p>
 
           {/* Trigrams Anatomy Card (Collapsible Dropdown Menu) */}
@@ -349,7 +342,12 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                     </div>
                     <span className="text-xs text-[#A1A1B0] block">{upperTrigramInfo.nature}</span>
                   </div>
-                  <span className="text-2xl font-serif text-[#F59E0B]">{upperTrigramInfo.symbol}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${upperTrigramInfo.name} en pinceladas`}>
+                      <TrigramCalligraphy lines={upperTrigramInfo.lines} size="md" />
+                    </div>
+                    <span className="text-2xl font-serif text-[#F59E0B]">{upperTrigramInfo.symbol}</span>
+                  </div>
                 </div>
 
                 {/* Lower Trigram */}
@@ -364,7 +362,12 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                     </div>
                     <span className="text-xs text-[#A1A1B0] block">{lowerTrigramInfo.nature}</span>
                   </div>
-                  <span className="text-2xl font-serif text-[#F59E0B]">{lowerTrigramInfo.symbol}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${lowerTrigramInfo.name} en pinceladas`}>
+                      <TrigramCalligraphy lines={lowerTrigramInfo.lines} size="md" />
+                    </div>
+                    <span className="text-2xl font-serif text-[#F59E0B]">{lowerTrigramInfo.symbol}</span>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -381,17 +384,17 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Texts (Dictamen / Juicio, Imagen, Líneas Mutantes, Seis Líneas) */}
+        {/* Right Column: Texts (El Juicio, Imagen, Líneas Mutantes, Seis Líneas) */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-          {/* El Dictamen / Juicio (Tuàn) */}
+          {/* El Juicio */}
           <div className="bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-7 shadow-xl">
             <div className="flex items-center gap-2 pb-3 border-b border-[#232330] mb-4">
               <span className="w-2.5 h-2.5 bg-[#FF6B2B] rounded-full shadow-[0_0_6px_#FF6B2B]" />
               <h4 className="font-serif font-bold text-lg text-[#F4F4F6] tracking-wide">
-                El Dictamen / El Juicio (Tuàn • 彖傳)
+                El Juicio (Tuàn • 彖傳)
               </h4>
               <InfoButton
-                title="El Dictamen (Tuàn)"
+                title="El Juicio (Tuàn • 彖傳)"
                 content="Atribuido al Rey Wen, define la cualidad intrínseca del momento y orienta sobre si conviene emprender acciones audaces, aguardar o perseverar en la rectitud."
               />
             </div>
@@ -401,7 +404,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             </p>
 
             <div className="p-3 bg-[#181820] rounded-lg border border-[#2B2B38] text-xs text-[#A8A8B6] leading-relaxed">
-              <strong className="text-[#F59E0B]">¿Cómo interpretarlo?</strong> El Dictamen define la situación general y la disposición interna con la que debes abordar tu pregunta para actuar con sabiduría.
+              <strong className="text-[#F59E0B]">¿Cómo interpretarlo?</strong> El Juicio define la situación general y la disposición interna con la que debes abordar tu pregunta para actuar con sabiduría.
             </div>
           </div>
 
@@ -552,10 +555,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                         Al mutar estas líneas se da origen al hexagrama futuro <strong>#{derivedHexagram.number} {derivedHexagram.chinese} ({derivedHexagram.nameEs})</strong>.
                       </span>
                       <button
-                        onClick={() => {
-                          setActiveTab('derived');
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
+                        onClick={() => setActiveTab('derived')}
                         className="px-4 py-2 text-xs font-serif font-bold text-[#0A0A0D] bg-[#FF6B2B] hover:bg-[#FF8044] rounded-lg flex items-center gap-2 transition-colors cursor-pointer shrink-0"
                       >
                         <span>Ver Hexagrama Derivado</span>
@@ -599,99 +599,166 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             </div>
           )}
 
-          {/* All lines exploration section with interactive line filter and collapse toggle */}
+          {/* All lines exploration section with interactive line filter */}
           <div className="bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-6 shadow-xl transition-all">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#232330] mb-4">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#FF6B2B]" />
-                <h4 className="font-serif font-bold text-base text-[#F4F4F6] tracking-wide">
-                  Las Seis Líneas del Hexagrama #{currentHexagram.number}
-                </h4>
-                <InfoButton
-                  title="Las Seis Posiciones"
-                  content="Cada hexagrama se lee desde la línea 1 (cimiento o inicio) hasta la línea 6 (cima o retiro). Puedes filtrar por una línea específica o consultar las seis."
-                />
-              </div>
+            <div className="flex items-center gap-2 pb-3 border-b border-[#232330] mb-4">
+              <BookOpen className="w-4 h-4 text-[#FF6B2B]" />
+              <h4 className="font-serif font-bold text-base text-[#F4F4F6] tracking-wide">
+                Las Seis Líneas del Hexagrama #{currentHexagram.number}
+              </h4>
+              <InfoButton
+                title="Estructura de las Seis Posiciones"
+                showAcknowledgeButton={true}
+                acknowledgeText="Entendido"
+                content={
+                  <div className="space-y-3 text-xs leading-relaxed text-[#C8C8D6]">
+                    <p className="text-[#A1A1B0]">
+                      Los hexagramas se leen de abajo hacia arriba (de la línea 1 a la 6), reflejando la evolución temporal y el despliegue natural de cualquier proceso vital:
+                    </p>
 
-              {/* Accordion Toggle */}
-              <button
-                type="button"
-                onClick={() => setIsAllLinesOpen(!isAllLinesOpen)}
-                className="p-1.5 rounded-lg bg-[#1F1F2A] hover:bg-[#2A2A38] text-[#D1D1DC] border border-[#333345] transition-colors cursor-pointer flex items-center gap-1 text-xs"
-                aria-expanded={isAllLinesOpen}
-                title={isAllLinesOpen ? 'Plegar lista de líneas' : 'Desplegar lista de líneas'}
-              >
-                <span className="text-[11px] text-[#A1A1B0] hidden xs:inline">
-                  {isAllLinesOpen ? 'Plegar' : 'Desplegar'}
-                </span>
-                {isAllLinesOpen ? (
-                  <ChevronUp className="w-4 h-4 text-[#FF8F50]" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-[#FF8F50]" />
-                )}
-              </button>
+                    <div className="space-y-2 pt-1">
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 1 (Inicial • 初)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            Base / Cimiento
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>El Comienzo y la Raíz:</strong> Simboliza la fase germinal, el aprendiz o la fuerza latente. Aconseja prudencia, acumular energía y no precipitarse; la fuerza aún debe consolidarse.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 2 (Segunda • 二)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            Centro Interior
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>Equilibrio y Servicio:</strong> Centro del trigrama inferior. Representa la esfera íntima, la templanza, la rectitud ética y el deber sereno. Guarda correspondencia natural armónica con la línea 5.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 3 (Tercera • 三)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            Transición / Umbral
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>El Umbral de Tensión:</strong> Límite superior del trigrama interior. Marca el paso de lo privado a lo público. Posición de esfuerzo, inestabilidad y posible soberbia; demanda cautela y vigilancia permanente.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 4 (Cuarta • 四)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            Aproximación / Ministro
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>La Esfera Pública y el Consejero:</strong> Base del trigrama superior. Se ubica en contacto directo con el líder (línea 5). Requiere diplomacia, adaptabilidad, lealtad y discreción sin pretender suplantar al soberano.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 5 (Quinta • 五)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            El Soberano / Regente
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>La Cúspide del Liderazgo:</strong> Centro del trigrama superior y el lugar más noble del hexagrama. Encarna la madurez, la autoridad benevolente, la justicia y la visión global sobre el conjunto.
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-[#111116] border border-[#272738]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono font-bold text-[#F59E0B] text-[11px]">
+                            Línea 6 (Superior • 上)
+                          </span>
+                          <span className="text-[10px] text-[#FF8F50] font-mono">
+                            Cima / Retiro
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#A8A8B6] leading-relaxed">
+                          <strong>La Culminación y la Trascendencia:</strong> Fin del hexagrama. En el punto culminante el ciclo concluye y se prepara para transmutar. Advierte contra la soberbia del aislamiento e invita a la sabia retirada y al desapego espiritual.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-2.5 pt-2 border-t border-[#262638] text-[10px] text-[#8E8E9E] space-y-1">
+                      <p>
+                        • <strong>Los Tres Planos Cósmicos (Sān Cái):</strong> Líneas 1-2 = La Tierra (Dì) • Líneas 3-4 = El Ser Humano (Rén) • Líneas 5-6 = El Cielo (Tiān).
+                      </p>
+                      <p>
+                        • <strong>Lugares Yang/Yin:</strong> Las posiciones impares (1, 3, 5) son por naturaleza activas (Yang); las posiciones pares (2, 4, 6) son por naturaleza receptivas (Yin).
+                      </p>
+                    </div>
+                  </div>
+                }
+              />
             </div>
 
-            {isAllLinesOpen ? (
-              <>
-                <p className="text-xs text-[#A1A1B0] mb-3">
-                  Lectura completa de las seis posiciones (de la base a la cima):
-                </p>
+            <p className="text-xs text-[#A1A1B0] mb-3">
+              Lectura completa de las seis posiciones (de la base a la cima):
+            </p>
 
-                <div className="space-y-2">
-                  {currentHexagram.lines
-                    .map((text, idx) => ({ text, lineNum: idx + 1 }))
-                    .map(({ text, lineNum }) => {
-                      const isMutatingHere =
-                        !isViewingDerived && mutatingLinePositions.includes(lineNum);
-                      const isSelected = selectedLinePos === lineNum;
+            <div className="space-y-2">
+              {currentHexagram.lines
+                .map((text, idx) => ({ text, lineNum: idx + 1 }))
+                .map(({ text, lineNum }) => {
+                  const isMutatingHere =
+                    !isViewingDerived && mutatingLinePositions.includes(lineNum);
+                  const isSelected = selectedLinePos === lineNum;
 
-                      return (
-                        <div
-                          key={lineNum}
-                          onClick={() => setSelectedLinePos(lineNum)}
-                          className={`p-3.5 rounded-lg text-xs sm:text-sm font-serif leading-relaxed transition-all cursor-pointer ${
-                            isSelected
-                              ? 'bg-[#1E1915] border border-[#FF6B2B] text-[#F4F4F6]'
-                              : isMutatingHere
-                              ? 'bg-[#191412] border border-[#FF6B2B]/40 text-[#E4E4EC]'
-                              : 'bg-[#16161D] border border-[#262633] text-[#A1A1B0] hover:text-[#F4F4F6] hover:bg-[#1C1C24]'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2 mb-1.5">
-                            <span className="font-mono font-bold text-[11px] text-[#F59E0B]">
-                              Posición {lineNum}
-                            </span>
-                            {isMutatingHere && (
-                              <span className="bg-[#FF6B2B] text-[#0A0A0D] text-[9px] px-1.5 py-0.2 rounded-md font-sans font-bold">
-                                Mutante en tu tirada
-                              </span>
-                            )}
-                            {isSelected && (
-                              <span className="text-[10px] text-[#FF8F50] font-sans ml-auto">
-                                Seleccionada en el dibujo
-                              </span>
-                            )}
-                          </div>
-                          <div>{text}</div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </>
-            ) : (
-              <div
-                onClick={() => setIsAllLinesOpen(true)}
-                className="text-xs text-[#A8A8B6] flex items-center justify-between cursor-pointer hover:text-[#F4F4F6] py-1"
-              >
-                <span>
-                  Texto de las líneas plegado. Usa el selector o haz clic aquí para explorar las posiciones.
-                </span>
-                <span className="text-[11px] text-[#F59E0B] shrink-0 ml-2 font-mono">
-                  Desplegar +
-                </span>
-              </div>
-            )}
+                  return (
+                    <div
+                      key={lineNum}
+                      onClick={() => setSelectedLinePos(lineNum)}
+                      className={`p-3.5 rounded-lg text-xs sm:text-sm font-serif leading-relaxed transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-[#1E1915] border border-[#FF6B2B] text-[#F4F4F6]'
+                          : isMutatingHere
+                          ? 'bg-[#191412] border border-[#FF6B2B]/40 text-[#E4E4EC]'
+                          : 'bg-[#16161D] border border-[#262633] text-[#A1A1B0] hover:text-[#F4F4F6] hover:bg-[#1C1C24]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="font-mono font-bold text-[11px] text-[#F59E0B]">
+                          Posición {lineNum}
+                        </span>
+                        {isMutatingHere && (
+                          <span className="bg-[#FF6B2B] text-[#0A0A0D] text-[9px] px-1.5 py-0.2 rounded-md font-sans font-bold">
+                            Mutante en tu tirada
+                          </span>
+                        )}
+                        {isSelected && (
+                          <span className="text-[10px] text-[#FF8F50] font-sans ml-auto">
+                            Seleccionada en el dibujo
+                          </span>
+                        )}
+                      </div>
+                      <div>{text}</div>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ import {
 import { Coin } from './Coin';
 import { CoinValue } from '../types';
 import { InfoButton } from './InfoButton';
+import { tossSingleCoin } from '../logic/iching';
 
 interface BeginnerTutorialModalProps {
   isOpen: boolean;
@@ -73,7 +74,7 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
     {
       id: 'reading',
       title: 'Cómo leer tu resultado',
-      subtitle: 'Dictamen, Imagen y Consejo Práctico',
+      subtitle: 'El Juicio, Imagen y Consejo Práctico',
       icon: Eye,
     },
   ];
@@ -82,9 +83,9 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
     if (isPracticeFlipping) return;
     setIsPracticeFlipping(true);
     setTimeout(() => {
-      const c1: CoinValue = Math.random() < 0.5 ? 3 : 2;
-      const c2: CoinValue = Math.random() < 0.5 ? 3 : 2;
-      const c3: CoinValue = Math.random() < 0.5 ? 3 : 2;
+      const c1: CoinValue = tossSingleCoin().value;
+      const c2: CoinValue = tossSingleCoin().value;
+      const c3: CoinValue = tossSingleCoin().value;
       setPracticeCoins([c1, c2, c3]);
       setIsPracticeFlipping(false);
       setPracticeCount((prev) => prev + 1);
@@ -417,7 +418,7 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
                     1
                   </span>
                   <div>
-                    <strong className="text-[#F4F4F6] text-sm block">El Dictamen (El Juicio)</strong>
+                    <strong className="text-[#F4F4F6] text-sm block">El Juicio</strong>
                     <p className="text-[#A8A8B6] mt-0.5">
                       Es el consejo central. Te dice si el momento es propicio para avanzar, esperar, cruzar las grandes aguas o mantener la perseverancia.
                     </p>
@@ -444,6 +445,18 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
                     <strong className="text-[#F4F4F6] text-sm block">Tus Líneas Mutantes</strong>
                     <p className="text-[#A8A8B6] mt-0.5">
                       Si salieron líneas mutantes, léelas con atención prioritaria: son advertencias personalizadas para el momento exacto en que te encuentras.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg bg-[#181820] border border-[#2C2C3A] flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-[#A78BFA] text-[#0A0A0D] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                    4
+                  </span>
+                  <div>
+                    <strong className="text-[#F4F4F6] text-sm block">El Orden de las 6 Líneas (De abajo hacia arriba)</strong>
+                    <p className="text-[#A8A8B6] mt-0.5">
+                      Se leen siempre de la 1ª (base/inicios) a la 6ª (cúspide/desenlace), reflejando la maduración paso a paso de cualquier acontecimiento.
                     </p>
                   </div>
                 </div>

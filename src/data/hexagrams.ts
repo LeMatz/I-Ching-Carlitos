@@ -14,6 +14,8 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Lo Creativo obra un elevado éxito propiciado por la perseverancia. La energía generatriz y pura del cielo fluye sin trabas cuando la intención es noble y constante.',
     image:
       'El movimiento del cielo es vigoroso y constante. Así el noble se fortalece interiormente con infatigable perseverancia.',
+    tuanCommentary:
+      '«¡Cuán grande es lo Creativo, fuente originaria de donde todos los seres toman su comienzo y que colma el cielo entero! Las nubes se desplazan, las lluvias obran y todos los seres fluyen en sus formas. El noble, cabalgando sobre los seis dragones celestes, rige a través de las estaciones del tiempo.»',
     lines: [
       'Línea 1 (Nueve al comienzo): Dragón oculto en las profundidades. No es tiempo de actuar aún; preserva y acumula tu fuerza.',
       'Línea 2 (Nueve en el segundo lugar): Dragón visible en el campo abierto. Es propicio consultar al hombre sabio y salir al encuentro del maestro.',
@@ -22,6 +24,23 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 5 (Nueve en el quinto lugar): Dragón volando en los cielos. El poder y la claridad alcanzan su cenit. Es favorable ver al gran guía.',
       'Línea 6 (Nueve en la cima): Dragón arrogante que se eleva más allá de sus límites tendrá motivos de arrepentimiento. El exceso de audacia engendra aislamiento.',
     ],
+    lineImages: [
+      'Línea 1 (Xiang): «Dragón oculto; no actúes», pues la energía aún permanece abajo y en retiro.',
+      'Línea 2 (Xiang): «Dragón visible en el campo»; la virtud se derrama ampliamente en derredor.',
+      'Línea 3 (Xiang): «Activo durante el día»; transita el camino recto una y otra vez.',
+      'Línea 4 (Xiang): «Vacilación al borde del abismo»; avanzar no entraña falta si se examina el tiempo.',
+      'Línea 5 (Xiang): «Dragón volando en los cielos»; el gran hombre despliega su obra preclara.',
+      'Línea 6 (Xiang): «Dragón arrogante tendrá de qué arrepentirse»; colmar lo pleno no puede perdurar.',
+    ],
+    canonicalExtra: {
+      title: '用九 (Yòng Jiǔ • Séptima entrada canónica)',
+      chinese: '用九：见群龙无首，吉。',
+      text: 'Aparece una bandada de dragones sin cabeza: ventura.',
+      meaning:
+        'Cuando todos los trazos son nueve (Yang mutante), la totalidad de la energía creadora muta sin pretender imponer una jefatura rígida ni orgullo personal. La armonía cósmica prevalece sin tiranía.',
+    },
+    wenyanCommentary:
+      '«Lo Creativo engendra lo sublime y propicio, y afianza con firmeza la justicia del universo. La benevolencia reúne la bondad; la conveniencia armoniza la rectitud; la justicia rige el deber; la perseverancia es el sostén de los hechos. El noble encarna la benevolencia para guiar a los hombres y la perseverancia para coronar sus empresas con incorruptible rectitud.»',
   },
   2: {
     number: 2,
@@ -33,9 +52,11 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Tierra',
     binaryKey: '000000',
     judgment:
-      'Lo Receptivo obra un elevado éxito. Favorable por la perseverancia de una yegua. Si el noble emprende algo y pretende guiar, se extravía; mas si sigue dócil, encuentra conducción.',
+      'Lo Receptivo obra un elevado éxito. Favorable por la perseverancia de una yegua. Si el noble emprende algo y pretende guiar, se extravía; mas si sigue dócil, encuentra conducción. Al sudoeste se obtienen amigos, al noreste se pierden amigos. La perseverancia tranquila trae ventura.',
     image:
       'La condición de la tierra es la receptividad serena. Así el noble, de amplio espíritu, sostiene y acoge a todos los seres.',
+    tuanCommentary:
+      '«¡Cuán perfecta es la grandeza de lo Receptivo! Todos los seres toman de él su nacimiento al recibir sumisos la simiente del cielo. La tierra sostiene con anchura y su virtud armoniza sin límites. Al sudoeste se camina con compañeros afines; al noreste se prescinde de apegos partidarios para alcanzar la ventura de la perseverancia tranquila.»',
     lines: [
       'Línea 1 (Seis al comienzo): Pisar la escarcha; el hielo sólido está cerca. Las primeras señales del cambio deben ser advertidas con prontitud.',
       'Línea 2 (Seis en el segundo lugar): Rectitud, amplitud, grandeza. Sin esfuerzo artificial, todo resulta propicio.',
@@ -44,6 +65,23 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 5 (Seis en el quinto lugar): Prenda inferior amarilla: suprema ventura. La humildad y el decoro interior traen honor duradero.',
       'Línea 6 (Seis en la cima): Dragones luchan en el descampado; su sangre es oscura y amarilla. La tensión extrema entre opuestos agota sus fuerzas.',
     ],
+    lineImages: [
+      'Línea 1 (Xiang): «Pisar la escarcha; el hielo se acerca»; cuando el principio sombrío empieza a cuajar, su desarrollo culmina en hielo firme.',
+      'Línea 2 (Xiang): «Rectitud, amplitud, grandeza»; el movimiento de la tierra es recto y sin artificios; nada queda sin cumplimiento.',
+      'Línea 3 (Xiang): «Ocultar el mérito»; saber cuándo emitir la luz. En el servicio, no busca gloria personal sino consumación sabia.',
+      'Línea 4 (Xiang): «Bolsa atada; sin falta»; la cautela previene cualquier daño en tiempos oscuros.',
+      'Línea 5 (Xiang): «Prenda inferior amarilla: suprema ventura»; la belleza interior y la discreción adornan el centro.',
+      'Línea 6 (Xiang): «Dragones luchan en el descampado»; el camino del enfrentamiento extremo agota a ambos opuestos.',
+    ],
+    canonicalExtra: {
+      title: '用六 (Yòng Liù • Séptima entrada canónica)',
+      chinese: '用六：利永贞。',
+      text: 'Favorable es la perseverancia duradera.',
+      meaning:
+        'Cuando todos los trazos son seis (Yin mutante), la máxima receptividad muta en firmeza creadora sin perder su condición nutriente. Su gloria reside en la perseverancia inquebrantable.',
+    },
+    wenyanCommentary:
+      '«Lo Receptivo es sumamente dócil, mas su movimiento es amplio; es sumamente sereno, mas su virtud es cuadrada. La casa que acumula bondad tendrá colmada bendición; la que acumula maldad cosechará desventuras acumuladas. El noble es reverente para enderezar su alma y justo para cuadrar sus actos exteriores; cuando reverencia y justicia se unen, su virtud no decae jamás.»',
   },
   3: {
     number: 3,
@@ -58,13 +96,23 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'La Dificultad Inicial obra supremo éxito. Es propicio perseverar. Nada debe emprenderse con precipitación, mas conviene nombrar ayudantes.',
     image:
       'Nubes y truenos: la imagen del caos naciente. Así el noble desenreda y pone en orden lo confuso.',
+    tuanCommentary:
+      '«En la Dificultad Inicial, lo firme y lo blando se encuentran por vez primera y el nacimiento engendra aflicción. El movimiento en medio del peligro genera gran éxito mediante la perseverancia en la rectitud.»',
     lines: [
       'Línea 1 (Nueve al comienzo): Vacilaciones y obstáculos. Es propicio perseverar y buscar colaboradores de confianza.',
-      'Línea 2 (Seis en el segundo lugar): Dificultades que se acumulan; caballo y carro se separan. La espera paciente disolverá la incertidumbre.',
+      'Línea 2 (Seis en el segundo lugar): Avanza con dificultad, retrocede montado a caballo. No es un bandolero, viene a pedirla en matrimonio. La doncella es casta y no se compromete; al cabo de diez años se desposa.',
       'Línea 3 (Seis en el tercer lugar): Cazar venado sin el guardabosque: uno se pierde en el bosque. El sabio prefiere desistir antes de humillarse.',
       'Línea 4 (Seis en el cuarto lugar): Caballo y carro se separan. Buscar la unión trae ventura; avanzar es propicio.',
       'Línea 5 (Nueve en el quinto lugar): Dificultades para dispensar bendiciones. Pequeña perseverancia trae ventura; la gran osadía conduce al error.',
       'Línea 6 (Seis en la cima): Caballo y carro se separan; corren lágrimas de sangre. Si no se puede avanzar, aceptar el ciclo con dignidad.',
+    ],
+    lineImages: [
+      'Línea 1 (Xiang): Aunque haya vacilación y dificultad, la rectitud en el propósito atrae el apoyo de ayudantes valiosos.',
+      'Línea 2 (Xiang): La dificultad radica en montar sobre lo rígido; diez años de castidad perseverante preservan el destino.',
+      'Línea 3 (Xiang): Cazar venado sin guardabosques es codiciar la presa a ciegas; avanzar en tal estado acarrea ignominia.',
+      'Línea 4 (Xiang): Avanzar con petición de auxilio es actuar con claridad y juicio recto.',
+      'Línea 5 (Xiang): Dispensar bendiciones con tacañería; el bien aún no ha sido reconocido con amplitud.',
+      'Línea 6 (Xiang): Lágrimas de sangre que fluyen: ¿cómo podría sostenerse tal situación por mucho tiempo?',
     ],
   },
   4: {
@@ -77,9 +125,11 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Agua',
     binaryKey: '010001',
     judgment:
-      'La Necedad Juvenil tiene éxito. No soy yo quien busca al joven inexperto; el joven inexperto me busca a mí. Con sinceridad responde el oráculo, pero la duda reiterada enturbia.',
+      'La Necedad Juvenil tiene éxito. No soy yo quien busca al joven inexperto; el joven inexperto me busca a mí. Al primer oráculo respondo; dos y tres veces es importunidad, y al importuno no respondo. Es propicia la perseverancia.',
     image:
       'Al pie de la montaña brota un manantial: la imagen de la juventud. El noble nutre su carácter mediante la firmeza y la virtud.',
+    tuanCommentary:
+      '«Bajo la montaña ruge el abismo: peligro y detención conforman la inexperiencia. Mas el aprendiz tiene éxito porque actúa en el momento justo mediante la enseñanza debida. El primer oráculo responde a la sinceridad; la reiteración egoísta es importunidad y enturbia la mente.»',
     lines: [
       'Línea 1 (Seis al comienzo): Desarrollar al ignorante exige disciplina, mas conviene quitarle los grillos antes del resentimiento.',
       'Línea 2 (Nueve en el segundo lugar): Soportar a los inexpertos con bondad trae ventura. Saber acoger a las naturalezas débiles engendra armonía.',
@@ -87,6 +137,14 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 4 (Seis en el cuarto lugar): Necedad enredada en fantasías trae vergüenza y penuria.',
       'Línea 5 (Seis en el quinto lugar): La inocencia infantil y la disposición a aprender traen ventura.',
       'Línea 6 (Nueve en la cima): Al castigar la insensatez, no conviene cometer excesos; solo es venturoso prevenir transgresiones.',
+    ],
+    lineImages: [
+      'Línea 1 (Xiang): Aplicar disciplina al inexperto sirve para establecer reglas rectas y prevenir el desenfreno.',
+      'Línea 2 (Xiang): Acoger al necio con benevolencia manifiesta la capacidad de quien sabe guiar el hogar.',
+      'Línea 3 (Xiang): No tomar una mujer semejante: su conducta carece de orden interior.',
+      'Línea 4 (Xiang): La vergüenza del necio enredado radica en su alejamiento de la realidad práctica.',
+      'Línea 5 (Xiang): La ventura del niño radica en su docilidad sin reservas ante quien le instruye.',
+      'Línea 6 (Xiang): Conviene defenderse de la violencia; en el castigo superior e inferior deben guardar la debida medida.',
     ],
   },
   5: {
@@ -102,6 +160,8 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'La Espera. Si eres sincero, tendrás luz y éxito. La perseverancia trae ventura. Es propicio cruzar las grandes aguas.',
     image:
       'Nubes ascienden al cielo: la imagen de la espera. Así el noble come, bebe y descansa con serena alegría.',
+    tuanCommentary:
+      '«La Espera: ante el abismo peligroso el cielo se detiene con firmeza sin precipitarse. Siendo sincero y luminoso, el éxito y la ventura acompañan al hombre recto hasta cruzar las grandes aguas.»',
     lines: [
       'Línea 1 (Nueve al comienzo): Espera en la llanura despejada. Conviene perseverar en lo cotidiano para evitar la falta.',
       'Línea 2 (Nueve en el segundo lugar): Espera en la arena ribereña. Habrá murmuraciones y roces, mas el final es venturoso.',
@@ -109,6 +169,14 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 4 (Seis en el cuarto lugar): Espera en un lugar sangriento. Salir de la fosa requiere serenidad y sumisión al orden.',
       'Línea 5 (Nueve en el quinto lugar): Espera ante el vino y los manjares. Perseverancia serena trae gran ventura.',
       'Línea 6 (Seis en la cima): Se cae en el abismo. Llegan tres huéspedes no invitados; trátalos con cortesía y al final habrá ventura.',
+    ],
+    lineImages: [
+      'Línea 1 (Xiang): Esperar en el descampado; no apresurarse a cometer faltas.',
+      'Línea 2 (Xiang): Esperar en la arena; murmuraciones menores se disuelven en el desenlace venturoso.',
+      'Línea 3 (Xiang): Esperar en el lodo atrae adversarios; el cuidado extremo aleja la ruina.',
+      'Línea 4 (Xiang): Esperar en la sangre; someterse con docilidad a la luz de la razón rescata del abismo.',
+      'Línea 5 (Xiang): Vino y manjares con perseverancia recta; se mora en la posición central.',
+      'Línea 6 (Xiang): Huéspedes no invitados acogidos con reverencia; aunque la posición no sea adecuada, no se incurre en gran falta.',
     ],
   },
   6: {
@@ -121,16 +189,26 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Agua',
     binaryKey: '010111',
     judgment:
-      'El Conflicto. Eres sincero pero encuentras obstrucción. Cautelosa detención a mitad de camino trae ventura; llevar la contienda hasta el fin atrae desventura. Es propicio consultar al gran hombre.',
+      'El Conflicto. Eres sincero pero encuentras obstrucción. Cautelosa detención a mitad de camino trae ventura; llevar la contienda hasta el fin atrae desventura. Es propicio consultar al gran hombre. No es propicio cruzar las grandes aguas.',
     image:
       'Cielo y agua se mueven en direcciones contrarias: la imagen del conflicto. Así el noble medita detenidamente el inicio de toda empresa.',
+    tuanCommentary:
+      '«El Conflicto: lo firme está arriba y lo abismal abajo; el cielo sube, el agua cae: marchan en sentidos opuestos. Detenerse a tiempo trae ventura porque lo duro se reconcilia con el centro; prolongar el pleito hasta el final es desventura porque el abismo traga al contendiente. No cruzar grandes aguas: entrarías de lleno en el peligro.»',
     lines: [
       'Línea 1 (Seis al comienzo): No perpetuar la querella. Habrá pequeñas críticas, mas al final el desenlace es venturoso.',
-      'Línea 2 (Nueve en el segundo lugar): No se puede vencer en la disputa; regresar y ceder ante la vecindad mantiene libre de culpa.',
-      'Línea 3 (Seis en el tercer lugar): Nutrirse de virtudes antiguas. La perseverancia en la rectitud evita el peligro.',
+      'Línea 2 (Nueve en el segundo lugar): No puede sostener el litigio; regresa y huye. Los habitantes de su aldea de trescientas casas quedan libres de culpa y desgracia.',
+      'Línea 3 (Seis en el tercer lugar): Nutrirse de la antigua virtud. La perseverancia trae peligro; al final, ventura. Si sirves en los asuntos de un rey, no busques obras consumadas ni gloria propia.',
       'Línea 4 (Nueve en el cuarto lugar): Uno no puede sostener la disputa. Retornar y aceptar el propio destino trae paz y ventura.',
       'Línea 5 (Nueve en el quinto lugar): Litigar ante un árbitro recto y preclaro trae suprema ventura.',
       'Línea 6 (Nueve en la cima): Aunque se le otorgue un cinturón de honor, tres veces en una misma mañana le será arrebatado.',
+    ],
+    lineImages: [
+      'Línea 1 (Xiang): No prolongar el litigio; la disputa no puede extenderse eternamente.',
+      'Línea 2 (Xiang): Ceder y huir de la contienda; desde abajo contender con lo superior atraería el desastre.',
+      'Línea 3 (Xiang): Nutrirse de la antigua virtud y acatar al superior trae ventura final.',
+      'Línea 4 (Xiang): Retornar y someterse a la ordenación del destino; no se pierde nada al apaciguar el ánimo.',
+      'Línea 5 (Xiang): Litigar ante un árbitro recto trae ventura porque se halla en el centro y la justicia resplandece.',
+      'Línea 6 (Xiang): Obtener insignias por la disputa judicial no merece honra perdurable.',
     ],
   },
   7: {
@@ -143,16 +221,26 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Agua',
     binaryKey: '010000',
     judgment:
-      'El Ejército requiere hombres maduros y disciplina firme. Fortuna sin tacha cuando la causa es justa y el mando es sereno.',
+      'El Ejército. Es necesaria la perseverancia. El hombre maduro y probado tiene ventura. Sin falta.',
     image:
       'En el seno de la tierra reposa el agua: la imagen del ejército. Así el noble incrementa su generosidad hacia el pueblo y congrega voluntades.',
+    tuanCommentary:
+      '«El Ejército es la masa congregada; la perseverancia es la justicia de las armas. Quien puede movilizar a la multitud con justicia puede regir el mundo. El hombre maduro y probado (丈人) en el centro es obedecido; emprender una guerra sin dirección sabia acarrea la ruina.»',
     lines: [
       'Línea 1 (Seis al comienzo): Un ejército debe ponerse en marcha con estricto orden; si no reina la disciplina, sobreviene la desgracia.',
       'Línea 2 (Nueve en el segundo lugar): En medio del ejército, el líder recibe honores del soberano. Ventura sin falta.',
       'Línea 3 (Seis en el tercer lugar): El ejército transporta cadáveres en sus carros. Grave desventura provocada por mandos divididos.',
       'Línea 4 (Seis en el cuarto lugar): El ejército se repliega en orden. No hay reproche; una retirada prudente no es cobardía.',
-      'Línea 5 (Seis en el quinto lugar): Caza en el campo; es propicio capturar al cabecilla. Entregar el mando al más experimentado.',
+      'Línea 5 (Seis en el quinto lugar): Hay presas en el campo, es propicio atraparlas sin falta. El hijo mayor dirige el ejército; el hijo menor transporta cadáveres en los carros: perseverar trae desventura.',
       'Línea 6 (Seis en la cima): El gran príncipe dicta órdenes y asigna tierras; a los mediocres no se les debe encomendar el poder.',
+    ],
+    lineImages: [
+      'Línea 1 (Xiang): El ejército parte con disciplina; perder las reglas del orden militar atrae de inmediato la desgracia.',
+      'Línea 2 (Xiang): Recibe los favores del rey porque en el centro asume el destino de las tropas.',
+      'Línea 3 (Xiang): El ejército transporta cadáveres en sus carros: enorme desventura nacida de la incompetencia.',
+      'Línea 4 (Xiang): El ejército acampa en retirada: no hay falta porque preserva intactas las fuerzas.',
+      'Línea 5 (Xiang): El hijo mayor conduce con sabiduría; encomendar las tropas al menor inepto llena los carros de muertos.',
+      'Línea 6 (Xiang): El gran soberano distribuye feudos; conceder mando a hombres vulgares e ineptos destruiría el reino.',
     ],
   },
   8: {
@@ -196,7 +284,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Nueve en el tercer lugar): Los rayos de la rueda se desprenden; marido y mujer se miran con recelo.',
       'Línea 4 (Seis en el cuarto lugar): Si hay sinceridad, el peligro y el derramamiento de sangre se desvanecen.',
       'Línea 5 (Nueve en el quinto lugar): Sinceridad unida por lazos de confianza mutua; comparte su riqueza con el vecino.',
-      'Línea 6 (Nueve en la cima): Ya cayó la lluvia, ya hay reposo. El poder de la virtud se colma; descansar antes del exceso.',
+      'Línea 6 (Nueve en la cima): Ya llovió, ya hay reposo; se honra la virtud colmada. La perseverancia de la mujer trae peligro. La luna está casi llena; si el noble avanza en campaña militar, desventura.',
     ],
   },
   10: {
@@ -215,7 +303,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lines: [
       'Línea 1 (Nueve al comienzo): Conducta sencilla y sin artificios. Avanzar sin pretensiones evita la culpa.',
       'Línea 2 (Nueve en el segundo lugar): Andar por un sendero llano y solitario. La perseverancia del hombre callado trae ventura.',
-      'Línea 3 (Seis en el tercer lugar): El tuerto que pretende ver claro; el cojo que pretende marchar aprisa. Pisa la cola del tigre y este lo muerde.',
+      'Línea 3 (Seis en el tercer lugar): El tuerto cree que puede ver, el cojo cree que puede caminar. Pisa la cola del tigre y éste lo muerde: desventura. Un guerrero actúa así por su gran príncipe.',
       'Línea 4 (Nueve en el cuarto lugar): Pisa la cola del tigre con extremo temor y cautela. Al final sobreviene la ventura.',
       'Línea 5 (Nueve en el quinto lugar): Conducta decidida. Conciencia del riesgo en cada paso.',
       'Línea 6 (Nueve en la cima): Observa tu conducta y examina los frutos cosechados. Si la rueda es redonda, sobreviene suprema ventura.',
@@ -240,7 +328,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Nueve en el tercer lugar): No hay llanura sin colina, no hay partida sin retorno. La rectitud serena disipa la pesadumbre.',
       'Línea 4 (Seis en el cuarto lugar): Desciende en vuelo ligero sin vanagloriarse de sus bienes; sinceridad mutua con el prójimo.',
       'Línea 5 (Seis en el quinto lugar): El soberano Yi entrega a su hija en matrimonio. Armonía y suprema ventura.',
-      'Línea 6 (Seis en la cima): La muralla se derrumba en el foso. No envíes tropas; mantén el orden dentro de tu propia ciudad.',
+      'Línea 6 (Seis en la cima): La muralla se derrumba en el foso. No uses el ejército. Proclama órdenes en tu propia ciudad; perseverar trae humillación.',
     ],
   },
   12: {
@@ -253,7 +341,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Tierra',
     binaryKey: '000111',
     judgment:
-      'El Estancamiento. Los hombres mezquinos prevalecen; lo grande se aleja y lo pequeño se impone. El noble preserva su integridad retirándose de la vanagloria.',
+      'El Estancamiento. No es propicia la perseverancia del noble; lo grande se va, lo pequeño viene. Cielo y tierra no se comunican y reina el desorden.',
     image:
       'Cielo y tierra no se comunican: la imagen del bloqueo. El noble se retira a su valor interior para resguardarse de la corrupción.',
     lines: [
@@ -389,7 +477,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     image:
       'El viento se detiene al pie de la montaña: la imagen de la decadencia. El noble sacude al pueblo y tonifica su espíritu.',
     lines: [
-      'Línea 1 (Seis al comienzo): Reparar los descuidos de los antepasados. Si hay un hijo digno, el padre no incurre en falta.',
+      'Línea 1 (Seis al comienzo): Reparar lo que el padre echó a perder. Habiendo un hijo, el difunto padre queda libre de falta. Peligro; al final, ventura.',
       'Línea 2 (Nueve en el segundo lugar): Enmendar con suavidad y tacto lo deteriorado; no conviene la dureza extrema.',
       'Línea 3 (Nueve en el tercer lugar): Reparar con excesivo celo causará pequeños reproches, mas no gran falta.',
       'Línea 4 (Seis en el cuarto lugar): Tolerar pasivamente la decadencia heredada acarreará vergüenza.',
@@ -481,7 +569,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 2 (Seis en el segundo lugar): Embellece su barba y se mueve al compás de su guía.',
       'Línea 3 (Nueve en el tercer lugar): Bello y reluciente como el rocío. Perseverar en la virtud auténtica trae ventura duradera.',
       'Línea 4 (Seis en el cuarto lugar): ¿Elegir la gracia o la sencillez? Un caballo blanco con alas se acerca; no es un agresor, busca una alianza pura.',
-      'Línea 5 (Seis en el quinto lugar): Gracia en jardines de colina; el rollo de seda es modesto, pero al final hay ventura.',
+      'Línea 5 (Seis en el quinto lugar): Adorno en las colinas y huertos. Un modesto fardo de seda: humillación, al final ventura.',
       'Línea 6 (Nueve en la cima): Belleza blanca e inmaculada, sin artificios. No hay falta.',
     ],
   },
@@ -567,7 +655,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lines: [
       'Línea 1 (Nueve al comienzo): Hay peligro; es propicio contenerse y abstenerse de avanzar.',
       'Línea 2 (Nueve en el segundo lugar): Se retiran los ejes del carro. Aceptar la detención temporal.',
-      'Línea 3 (Nueve en el tercer lugar): Un buen caballo que corre veloz; perseverancia ante los rigores diarios. Propicio emprender algo.',
+      'Línea 3 (Nueve en el tercer lugar): Buenos caballos en persecución. Es propicia la perseverancia en la dificultad. Ejercitarse a diario en el carro y las armas; es propicio tener adónde ir.',
       'Línea 4 (Seis en el cuarto lugar): La tabla protectora en la testuz del toro joven: gran ventura al prevenir el desborde.',
       'Línea 5 (Seis en el quinto lugar): Los colmillos del jabalí castrado: gran ventura al transformar la agresividad en mansedumbre.',
       'Línea 6 (Nueve en la cima): Se alcanza el gran camino del cielo: supremo éxito.',
@@ -605,7 +693,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Viento',
     binaryKey: '011110',
     judgment:
-      'La Preponderancia de lo Grande. La viga cumbrera se comba bajo un peso extraordinario. Es propicio actuar con rapidez y tener a dónde ir.',
+      'La Preponderancia de lo Grande. La viga cumbrera se comba. Es propicio tener adónde ir. Éxito.',
     image:
       'El lago sumerge a los árboles: la imagen de la gran prueba. El noble, erguido y solitario, permanece imperturbable y no teme renunciar al mundo.',
     lines: [
@@ -614,7 +702,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Nueve en el tercer lugar): La viga cumbrera se quiebra por rigidez obstinada: desventura.',
       'Línea 4 (Nueve en el cuarto lugar): La viga cumbrera se apuntala con prudencia: ventura. Si hay ambición egoísta habrá humillación.',
       'Línea 5 (Nueve en el quinto lugar): Un álamo seco florece; una mujer madura toma un joven marido. Ni culpa ni gloria perdurable.',
-      'Línea 6 (Seis en la cima): Vadear el agua crecida hasta quedar cubierto por encima de la cabeza. Peligro extremo, pero sin tacha de cobardía.',
+      'Línea 6 (Seis en la cima): Vadea pasando de la cuenta hasta cubrirse la coronilla: desventura, sin falta.',
     ],
   },
   29: {
@@ -721,7 +809,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lines: [
       'Línea 1 (Seis al comienzo): Retirada en la retaguardia: peligro. No conviene emprender acción alguna.',
       'Línea 2 (Seis en el segundo lugar): Lo retiene con una correa de cuero amarillo firme: nadie podrá romper su vínculo leal.',
-      'Línea 3 (Nueve en el tercer lugar): Retirada demorada por apegos afectivos: peligro y fatiga.',
+      'Línea 3 (Nueve en el tercer lugar): Retiro atado: hay enfermedad y peligro. Mantener servidores y servidoras trae ventura.',
       'Línea 4 (Nueve en el cuarto lugar): Retirada voluntaria y serena: ventura para el noble, confusión para el mezquino.',
       'Línea 5 (Nueve en el quinto lugar): Retirada amable y decidida. La perseverancia trae ventura.',
       'Línea 6 (Nueve en la cima): Retirada desprendida y alegre: todo es propicio.',
@@ -768,7 +856,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Seis en el tercer lugar): Todos confían y asienten: el remordimiento desaparece.',
       'Línea 4 (Nueve en el cuarto lugar): Progresar como una rata campestre y codiciosa: perseverar en ello trae peligro.',
       'Línea 5 (Seis en el quinto lugar): El remordimiento se disuelve. No tomes las ganancias ni las pérdidas a pecho; avanzar trae ventura.',
-      'Línea 6 (Nueve en la cima): Progresar blandiendo los cuernos solo sirve para castigar a la propia ciudad. Peligro, pero sin falta si se modera.',
+      'Línea 6 (Nueve en la cima): Progresar blandiendo los cuernos; sólo sirve para castigar a la propia ciudad. Peligro, ventura, sin falta; perseverar trae humillación.',
     ],
   },
   36: {
@@ -891,7 +979,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Lago',
     binaryKey: '110001',
     judgment:
-      'La Merma acompañada de sinceridad interior obra supremo éxito sin falta. Es propicia la perseverancia. ¿Qué ofrenda usar? Dos cestillos pequeños bastan.',
+      'La Merma acompañada de sinceridad interior obra supremo éxito sin falta. Es propicia la perseverancia. Es propicio emprender algo. ¿Qué ofrenda usar? Dos cestillos pequeños bastan.',
     image:
       'Al pie de la montaña se extiende el lago: la imagen de la merma. El noble refrena su ira y modera sus deseos.',
     lines: [
@@ -900,7 +988,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Seis en el tercer lugar): Cuando tres viajan juntos, uno se separa; cuando uno viaja solo, encuentra a su compañero.',
       'Línea 4 (Seis en el cuarto lugar): Menguar los propios defectos hace que el otro se acerque con alegría: sin falta.',
       'Línea 5 (Seis en el quinto lugar): Alguien lo enriquece con diez pares de tortugas oraculares; nadie puede contradecirlo: suprema ventura.',
-      'Línea 6 (Nueve en la cima): Enriquecer a los demás sin mermarse a sí mismo: sin falta. La perseverancia trae ventura.',
+      'Línea 6 (Nueve en la cima): Sin mermarlo se le beneficia, sin falta. La perseverancia trae ventura. Es propicio tener adónde ir. Se obtienen servidores, pero no un hogar.',
     ],
   },
   42: {
@@ -918,9 +1006,9 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Viento y trueno: la imagen del aumento y la vitalidad. El noble imita el bien tan pronto lo ve y corrige de inmediato sus faltas.',
     lines: [
       'Línea 1 (Nueve al comienzo): Es propicio realizar grandes hazañas: suprema ventura y sin reproche.',
-      'Línea 2 (Seis en el segundo lugar): Alguien lo colma de bendiciones: diez pares de tortugas oraculares. La devoción constante ante el cielo trae ventura.',
+      'Línea 2 (Seis en el segundo lugar): Alguien le regala tortugas por valor de diez pares de caparazones, no puede rechazarlas. La perseverancia duradera trae ventura. El rey ofrece sacrificios al Supremo Señor: ventura.',
       'Línea 3 (Seis en el tercer lugar): Uno es enriquecido a través de sucesos infortunados. Camina con sinceridad con el sello en la mano.',
-      'Línea 4 (Seis en el cuarto lugar): Si actúas como mediador leal, el príncipe seguirá tus consejos benéficos.',
+      'Línea 4 (Seis en el cuarto lugar): Actuando en el medio informa al príncipe, quien lo sigue. Es propicio valerse de esto para mudar la capital.',
       'Línea 5 (Nueve en el quinto lugar): Si en verdad tienes un corazón generoso no preguntes por recompensa: suprema ventura.',
       'Línea 6 (Nueve en la cima): No aporta aumento a nadie; alguien lo golpea. Su corazón no es constante: desventura.',
     ],
@@ -935,7 +1023,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Cielo',
     binaryKey: '111110',
     judgment:
-      'La Resolución. Conviene exponer la verdad abiertamente en la corte del rey. Proclamarlo con sinceridad: hay peligro. Conviene avisar a la propia gente; no es propicio recurrir a las armas.',
+      'La Resolución. Conviene exponer la verdad abiertamente en la corte del rey. Proclamarlo con sinceridad: hay peligro. Conviene avisar a la propia gente; no es propicio recurrir a las armas. Es propicio tener adónde ir.',
     image:
       'El lago ha ascendido hasta el cielo: la imagen del desbordamiento. El noble reparte sus bienes hacia abajo y rehúye vanagloriarse de sus méritos.',
     lines: [
@@ -961,7 +1049,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     image:
       'Bajo el cielo sopla el viento: la imagen del encuentro. El soberano proclama sus órdenes a los cuatro rincones del reino.',
     lines: [
-      'Línea 1 (Seis al comienzo): Debe ser frenada con una traba de bronce. La perseverancia trae ventura; si se deja correr, sobreviene el desastre.',
+      'Línea 1 (Seis al comienzo): Sujeto a una traba de bronce, la perseverancia trae ventura. Si se tiene adónde ir, se verá desventura; el cerdo flaco está decidido a saltar y patalear.',
       'Línea 2 (Nueve en el segundo lugar): Hay un pez en el canasto: sin falta. No es propicio para los invitados extraños.',
       'Línea 3 (Nueve en el tercer lugar): Muslos despellejados, caminar con dificultad. Peligro, pero sin gran falta si se permanece cauteloso.',
       'Línea 4 (Nueve en el cuarto lugar): En el canasto ya no hay pez: esto acarrea desventura por alejarse del pueblo.',
@@ -1028,10 +1116,10 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'El lago no tiene agua, se ha agotado en el abismo: la imagen de la opresión. El noble arriesga su vida en pos de cumplir su auténtica vocación.',
     lines: [
       'Línea 1 (Seis al comienzo): Sentarse abatido bajo un árbol seco; se interna en un valle sombrío y durante tres años no ve nada.',
-      'Línea 2 (Nueve en el segundo lugar): Oprimido mientras come y bebe. Aparece un emisario con cordones rojos: propicio ofrecer oraciones.',
+      'Línea 2 (Nueve en el segundo lugar): Afligido en medio del vino y la comida; las rodilleras escarlatas están por llegar. Es propicio ofrecer sacrificios. Emprender una expedición trae desventura; no hay falta.',
       'Línea 3 (Seis en el tercer lugar): Se apoya en una roca y tropieza con espinos; entra en su casa y no ve a su esposa: desventura.',
       'Línea 4 (Nueve en el cuarto lugar): Se aproxima muy despacio, trabado en un carro de metal: vergüenza, mas se alcanza el fin.',
-      'Línea 5 (Nueve en el quinto lugar): Le cercenan la nariz y los pies; oprimido por dignatarios soberbios. Alivio lento sobreviene.',
+      'Línea 5 (Nueve en el quinto lugar): Nariz y pies cortados, afligido por los de rodilleras rojas; luego, poco a poco, llega el alivio. Es propicio ofrecer sacrificios.',
       'Línea 6 (Seis en la cima): Oprimido por enredaderas y lianas trepadoras; vacila diciendo «moverse causa pesar». Arrepentirse y actuar trae ventura.',
     ],
   },
@@ -1076,7 +1164,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 3 (Nueve en el tercer lugar): Iniciar la acción antes de tiempo trae desventura. Cuando la necesidad de cambio ha sido debatida tres veces, actúa.',
       'Línea 4 (Nueve en el cuarto lugar): El remordimiento desaparece; se tiene confianza. Cambiar el orden establecido trae ventura.',
       'Línea 5 (Nueve en el quinto lugar): El gran hombre muda como un tigre: sus rayas se vuelven nítidas y brillantes sin necesidad de consultar el oráculo.',
-      'Línea 6 (Seis en la cima): El noble muda como un leopardo; el hombre vulgar muda de faz y acata al nuevo orden. Conviene perseverar.',
+      'Línea 6 (Seis en la cima): El noble muda como un leopardo, el hombre común muda de rostro. Emprender una expedición militar trae desventura; permanecer perseverando trae ventura.',
     ],
   },
   50: {
@@ -1111,7 +1199,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Trueno',
     binaryKey: '100100',
     judgment:
-      'El Trueno suscita conmoción: ¡bum, bum! Risas y júbilo siguen al susto: ¡ja, ja! El trueno aterra a cien leguas a la redonda, mas él no derrama la cuchara de vino sacrificial.',
+      'El Trueno: Éxito. Llega el trueno con conmoción: ¡temor y temblor! Luego risas y palabras alegres. El trueno aterra a cien leguas a la redonda, mas no derrama la cuchara ni el vino de sacrificio.',
     image:
       'El trueno redoblado: la imagen del despertar reverente. El noble examina su corazón con temor sagrado y rectifica su vida.',
     lines: [
@@ -1251,7 +1339,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 2 (Nueve en el segundo lugar): Penetración bajo la cama; se recurre a sacerdotes y adivinos en abundancia: ventura sin falta.',
       'Línea 3 (Nueve en el tercer lugar): Penetración reiterada y forzada acarrea vergüenza.',
       'Línea 4 (Seis en el cuarto lugar): El pesar desaparece; en la cacería se consiguen tres clases de presas útiles.',
-      'Línea 5 (Nueve en el quinto lugar): La perseverancia trae ventura; el arrepentimiento se desvanece. Tres días antes del cambio, tres días después: reflexiona.',
+      'Línea 5 (Nueve en el quinto lugar): Perseverancia venturosa; los remordimientos desaparecen; nada que no sea propicio. Sin comienzo, pero con final. Tres días antes del cambio, tres días después del cambio: ventura.',
       'Línea 6 (Nueve en la cima): Penetración bajo la cama; pierde su hacha de viaje: desventura por exceso de sutileza.',
     ],
   },
@@ -1360,7 +1448,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 1 (Seis al comienzo): El ave vuela alto antes de tiempo y se hiere: desventura.',
       'Línea 2 (Seis en el segundo lugar): Pasa de largo ante su antepasado y acude a su antepasada; no alcanza al príncipe, mas sirve a su ministro: sin falta.',
       'Línea 3 (Nueve en el tercer lugar): Si no te proteges con sumo cuidado, alguien vendrá por detrás y te herirá: desventura.',
-      'Línea 4 (Nueve en el cuarto lugar): Sin falta. No te sobrepases; sé dócil y cauteloso en el camino.',
+      'Línea 4 (Nueve en el cuarto lugar): Sin falta. Sin sobrepasarse, sale al encuentro. Ir trae peligro, debe prevenirse; no actúes ni perseveres de forma duradera.',
       'Línea 5 (Seis en el quinto lugar): Nubes densas sin lluvia en nuestros confines. El príncipe caza a la presa oculta en la caverna con certera flecha.',
       'Línea 6 (Seis en la cima): Pasa de largo sin detenerse; el ave que vuela demasiado alto cae en la red: desventura por presunción.',
     ],

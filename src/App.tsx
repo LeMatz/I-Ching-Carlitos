@@ -9,7 +9,7 @@ import { BeginnerTutorialModal } from './components/BeginnerTutorialModal';
 import { calculateHexagramsFromLines } from './logic/iching';
 import { getHexagramByNumber } from './data/hexagrams';
 import { ConsultationRecord, HexagramData, HexagramLine } from './types';
-import { BookOpen, Clock, Grid, Plus, ShieldCheck, Sparkles, Compass, Instagram } from 'lucide-react';
+import { BookOpen, Clock, Grid, Plus, ShieldCheck, Sparkles, Compass, Instagram, AlertTriangle, Trash2, Lock } from 'lucide-react';
 
 const STORAGE_KEY = 'iching_consultations_v1';
 
@@ -26,6 +26,13 @@ export default function App() {
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+
+  // Eviction modal when history is full and oldest record has a note
+  const [pendingEvictionModal, setPendingEvictionModal] = useState<{
+    newRecord: ConsultationRecord;
+    oldestWithNote: ConsultationRecord;
+  } | null>(null);
+  const [allProtectedNotice, setAllProtectedNotice] = useState(false);
 
   // History state
   const [history, setHistory] = useState<ConsultationRecord[]>([]);
@@ -51,9 +58,10 @@ export default function App() {
   }, []);
 
   const saveHistory = (newHistory: ConsultationRecord[]) => {
-    setHistory(newHistory);
+    const trimmedHistory = newHistory.length > 10 ? newHistory.slice(0, 10) : newHistory;
+    setHistory(trimmedHistory);
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmedHistory));
     } catch (err) {
       console.error('Error saving history:', err);
     }
@@ -88,10 +96,36 @@ export default function App() {
       primaryHexagramNumber: primaryHexagram.number,
       derivedHexagramNumber: derivedHexagram?.number,
       mutatingLinePositions,
+      isProtected: false,
     };
 
-    const updatedHistory = [newRecord, ...history];
-    saveHistory(updatedHistory);
+    if (history.length < 10) {
+      saveHistory([newRecord, ...history]);
+    } else {
+      // Memory is full (10 records): determine which record can be evicted
+      const unprotected = history.filter((r) => !r.isProtected);
+
+      if (unprotected.length === 0) {
+        // All 10 records are manually protected
+        setAllProtectedNotice(true);
+      } else {
+        // Find an unprotected record without personal reflection/note first
+        const withoutNotes = unprotected.filter(
+          (r) => !r.userNote || !r.userNote.trim()
+        );
+
+        if (withoutNotes.length > 0) {
+          // Evict the oldest unprotected record without note
+          const toEvict = withoutNotes[withoutNotes.length - 1];
+          const updated = [newRecord, ...history.filter((r) => r.id !== toEvict.id)];
+          saveHistory(updated);
+        } else {
+          // All unprotected records have notes: prompt user before replacing oldest with note
+          const oldestWithNote = unprotected[unprotected.length - 1];
+          setPendingEvictionModal({ newRecord, oldestWithNote });
+        }
+      }
+    }
 
     setView('result');
   };
@@ -110,15 +144,32 @@ export default function App() {
     setView('result');
   };
 
+  // Toggle manual protection on a consultation record
+  const handleToggleProtectRecord = (id: string) => {
+    const updated = history.map((record) =>
+      record.id === id ? { ...record, isProtected: !record.isProtected } : record
+    );
+    saveHistory(updated);
+  };
+
   // Delete single record
   const handleDeleteRecord = (id: string) => {
     const filtered = history.filter((r) => r.id !== id);
     saveHistory(filtered);
   };
 
-  // Clear all history
+  // Clear all history except manually protected records
   const handleClearHistory = () => {
-    saveHistory([]);
+    const protectedRecords = history.filter((r) => r.isProtected);
+    saveHistory(protectedRecords);
+  };
+
+  // Update user note on consultation record
+  const handleUpdateNote = (id: string, note: string) => {
+    const updated = history.map((record) =>
+      record.id === id ? { ...record, userNote: note } : record
+    );
+    saveHistory(updated);
   };
 
   // Inspect hexagram from catalog
@@ -291,6 +342,8 @@ export default function App() {
         onSelectRecord={handleSelectRecord}
         onDeleteRecord={handleDeleteRecord}
         onClearHistory={handleClearHistory}
+        onUpdateNote={handleUpdateNote}
+        onToggleProtectRecord={handleToggleProtectRecord}
       />
 
       <TrigramsGuideModal
@@ -312,6 +365,113 @@ export default function App() {
           setView('prompt');
         }}
       />
+
+      {/* Eviction Notice Modal: when history is 10/10 and all unprotected have personal notes */}
+      {pendingEvictionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
+          <div className="bg-[#181822] border border-[#F59E0B]/50 rounded-xl p-5 max-w-md w-full shadow-2xl text-left animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-2.5 text-[#F59E0B] mb-3">
+              <div className="w-9 h-9 rounded-full bg-[#F59E0B]/15 flex items-center justify-center shrink-0 border border-[#F59E0B]/30">
+                <AlertTriangle className="w-4 h-4 text-[#F59E0B]" />
+              </div>
+              <div>
+                <h4 className="font-serif font-bold text-base text-[#F4F4F6] leading-tight">
+                  Memoria de Historial Llena (10/10)
+                </h4>
+                <p className="text-[11px] font-mono text-[#A1A1B0]">
+                  Sustitución de consulta con reflexión personal
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-[#C8C8D6] mb-2 leading-relaxed">
+              El historial ha alcanzado el límite de 10 consultas. Para registrar tu nueva tirada, se debe reemplazar la consulta más antigua con reflexiones personales:
+            </p>
+
+            <div className="bg-[#101015] border border-[#2B2B38] rounded-lg p-3 mb-3 text-xs">
+              <div className="font-serif font-bold text-[#F4F4F6] mb-1">
+                #{pendingEvictionModal.oldestWithNote.primaryHexagramNumber}{' '}
+                {getHexagramByNumber(pendingEvictionModal.oldestWithNote.primaryHexagramNumber).nameEs}
+                <span className="font-mono text-[10px] text-[#A1A1B0] ml-2">
+                  ({new Date(pendingEvictionModal.oldestWithNote.date).toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })})
+                </span>
+              </div>
+              <p className="italic text-[#FFC09F] line-clamp-3">
+                «{pendingEvictionModal.oldestWithNote.userNote}»
+              </p>
+            </div>
+
+            <p className="text-[11px] text-[#8E8E9E] mb-4">
+              ¿Deseas confirmar la eliminación de esta consulta antigua para guardar la actual?
+            </p>
+
+            <div className="flex items-center justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => setPendingEvictionModal(null)}
+                className="px-3.5 py-1.5 rounded-lg border border-[#3A3A4A] text-xs text-[#C8C8D6] hover:bg-[#252535] hover:text-[#F4F4F6] transition-colors cursor-pointer"
+              >
+                Conservar historial actual
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  saveHistory([
+                    pendingEvictionModal.newRecord,
+                    ...history.filter((r) => r.id !== pendingEvictionModal.oldestWithNote.id),
+                  ]);
+                  setPendingEvictionModal(null);
+                }}
+                className="px-4 py-1.5 rounded-lg bg-[#FF6B2B] hover:bg-[#E05A1F] text-white font-serif font-bold text-xs shadow-md transition-colors cursor-pointer"
+              >
+                Confirmar y reemplazar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Notice Modal: when 10/10 records are manually protected */}
+      {allProtectedNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
+          <div className="bg-[#181822] border border-[#F59E0B]/50 rounded-xl p-5 max-w-md w-full shadow-2xl text-left animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-2.5 text-[#F59E0B] mb-3">
+              <div className="w-9 h-9 rounded-full bg-[#F59E0B]/15 flex items-center justify-center shrink-0 border border-[#F59E0B]/30">
+                <Lock className="w-4 h-4 text-[#F59E0B]" />
+              </div>
+              <div>
+                <h4 className="font-serif font-bold text-base text-[#F4F4F6] leading-tight">
+                  Historial Lleno y Protegido
+                </h4>
+                <p className="text-[11px] font-mono text-[#A1A1B0]">
+                  10 de 10 consultas protegidas manualmente
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-[#C8C8D6] mb-4 leading-relaxed">
+              Tu nueva tirada se muestra en pantalla, pero no se ha podido guardar en el historial porque los 10 registros almacenados están protegidos manualmente contra eliminación.
+              <br /><br />
+              Si deseas archivar nuevas tiradas, abre el Historial y pulsa sobre «Protegida» en alguna consulta previa para habilitar su sustitución.
+            </p>
+
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={() => setAllProtectedNotice(false)}
+                className="px-4 py-1.5 rounded-lg bg-[#FF6B2B] hover:bg-[#E05A1F] text-white font-serif font-bold text-xs shadow-md transition-colors cursor-pointer"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

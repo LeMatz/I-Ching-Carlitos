@@ -9,6 +9,8 @@ interface InfoButtonProps {
   size?: 'sm' | 'md';
   placement?: 'top' | 'bottom' | 'left' | 'right';
   className?: string;
+  showAcknowledgeButton?: boolean;
+  acknowledgeText?: string;
 }
 
 export const InfoButton: React.FC<InfoButtonProps> = ({
@@ -17,6 +19,8 @@ export const InfoButton: React.FC<InfoButtonProps> = ({
   label = 'Más información',
   size = 'sm',
   className = '',
+  showAcknowledgeButton = false,
+  acknowledgeText = 'Entendido',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -155,6 +159,21 @@ export const InfoButton: React.FC<InfoButtonProps> = ({
                 </button>
               </div>
               <div className="text-[12px] text-[#C8C8D6] space-y-1.5 leading-relaxed">{content}</div>
+
+              {showAcknowledgeButton && (
+                <div className="mt-4 pt-3 border-t border-[#2B2B3A] flex justify-end">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsOpen(false);
+                    }}
+                    className="w-full sm:w-auto px-5 py-2 rounded-lg bg-[#FF6B2B] hover:bg-[#FF8044] text-[#0A0A0D] font-serif font-bold text-xs transition-colors cursor-pointer text-center shadow-md hover:shadow-lg"
+                  >
+                    {acknowledgeText}
+                  </button>
+                </div>
+              )}
             </div>
           </div>,
           document.body
