@@ -16,6 +16,7 @@ interface HexagramDrawingProps {
   hexagramNumber?: number;
   hexagramName?: string;
   lineMeanings?: string[];
+  lineImages?: string[];
   mutatingLinePositions?: number[];
 }
 
@@ -29,6 +30,7 @@ export const HexagramDrawing: React.FC<HexagramDrawingProps> = ({
   hexagramNumber,
   hexagramName,
   lineMeanings,
+  lineImages,
   mutatingLinePositions = [],
 }) => {
   // Sort lines from top (pos 6) to bottom (pos 1) for visual top-down CSS rendering
@@ -342,6 +344,18 @@ export const HexagramDrawing: React.FC<HexagramDrawingProps> = ({
                     <span className="text-[#8E8E9E] italic">
                       Significado no disponible para esta posición.
                     </span>
+                  )}
+
+                  {/* Xiǎo Xiàng (Pequeña Imagen Confuciana) */}
+                  {modalLinePos && lineImages && lineImages[modalLinePos - 1] && (
+                    <div className="mt-3 pt-2.5 border-t border-[#2B2B3C] text-xs text-[#C5C5D2] font-sans">
+                      <div className="text-[10px] font-mono text-[#F59E0B] uppercase font-semibold mb-1">
+                        Xiǎo Xiàng (小象傳 • La Pequeña Imagen)
+                      </div>
+                      <p className="italic text-[#E2E2EC]">
+                        {lineImages[modalLinePos - 1]}
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>

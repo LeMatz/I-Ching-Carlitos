@@ -401,6 +401,10 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
                     <span>Hacia dónde evoluciona o el desenlace probable.</span>
                   </div>
                 </div>
+
+                <div className="p-2 rounded bg-[#111116] border border-[#3E342B] text-[10px] text-[#D8C6B6] leading-relaxed">
+                  ★ <strong>Regla Sagrada de 6 Líneas Mutantes:</strong> Si las seis líneas resultan ser nueves (Hexagrama 1) o seises (Hexagrama 2), la tradición clásica no lee las líneas aisladas sino las sentencias supremas <em>用九 (Yòng Jiǔ)</em> o <em>用六 (Yòng Liù)</em>.
+                </div>
               </div>
             </div>
           )}

@@ -4,7 +4,7 @@ import { TrigramCalligraphy } from './TrigramCalligraphy';
 import { HexagramData, HexagramLine } from '../types';
 import { TRIGRAMS } from '../data/trigrams';
 import { getRecommendedAttitude } from '../data/attitudes';
-import { getLineMeta } from '../logic/iching';
+import { getLineMeta, getNuclearHexagram } from '../logic/iching';
 import { InfoButton } from './InfoButton';
 import {
   RotateCcw,
@@ -13,10 +13,14 @@ import {
   BookOpen,
   Info,
   Lightbulb,
-  Compass,
   Sparkles,
   ChevronDown,
   ChevronUp,
+  Compass,
+  Layers,
+  ScrollText,
+  ShieldCheck,
+  Feather,
 } from 'lucide-react';
 
 interface HexagramDetailProps {
@@ -44,15 +48,27 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
   // Collapsible dropdown states for results view
   const [isQuickSummaryOpen, setIsQuickSummaryOpen] = useState(false);
   const [isTrigramsOpen, setIsTrigramsOpen] = useState(true);
+  const [isTrigramAttributesOpen, setIsTrigramAttributesOpen] = useState(true);
+  const [isNuclearOpen, setIsNuclearOpen] = useState(false);
   const [isImageOpen, setIsImageOpen] = useState(true);
+  const [isTuanOpen, setIsTuanOpen] = useState(false);
+  const [isWenyanOpen, setIsWenyanOpen] = useState(false);
   const [isMutationsOpen, setIsMutationsOpen] = useState(true);
 
   const isViewingDerived = Boolean(activeTab === 'derived' && derivedHexagram);
   const currentHexagram = isViewingDerived && derivedHexagram ? derivedHexagram : primaryHexagram;
 
-  // Trigrams
+  // Canonical 6-mutating-lines conditions (Zhu Xi / Shao Yong rules)
+  const isAllNines = lines.length === 6 && lines.every((l) => l.value === 9);
+  const isAllSixes = lines.length === 6 && lines.every((l) => l.value === 6);
+  const allLinesMutating = mutatingLinePositions.length === 6;
+
+  // Trigrams for current hexagram
   const upperTrigramInfo = TRIGRAMS[currentHexagram.upperTrigram] || TRIGRAMS['Cielo'];
   const lowerTrigramInfo = TRIGRAMS[currentHexagram.lowerTrigram] || TRIGRAMS['Cielo'];
+
+  // Nuclear Hexagram (Hù Guà • 互卦)
+  const nuclearData = getNuclearHexagram(currentHexagram.binaryKey);
 
   // Lines for derived hexagram (if viewing derived)
   const derivedLines: HexagramLine[] = lines.map((l) => {
@@ -104,6 +120,112 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
           </button>
         </div>
       </div>
+
+      {/* Special Canonical Rule Banner: 6 Mutating Lines (用九, 用六, or full mutation) */}
+      {!isViewingDerived && isAllNines && primaryHexagram.canonicalExtra && (
+        <div className="w-full bg-gradient-to-r from-[#2A1805] via-[#1E140C] to-[#141216] border-2 border-[#F59E0B] rounded-xl p-5 sm:p-6 shadow-2xl shadow-[#F59E0B]/20 relative overflow-hidden">
+          <div className="absolute -right-6 -bottom-6 text-8xl font-chinese text-[#F59E0B]/10 select-none pointer-events-none">
+            用九
+          </div>
+          <div className="flex items-start gap-3.5 relative z-10">
+            <div className="w-10 h-10 rounded-xl bg-[#F59E0B]/20 border border-[#F59E0B]/60 flex items-center justify-center shrink-0 text-[#F59E0B] shadow-md">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-[#F59E0B] text-[#0A0A0D]">
+                  Regla Canónica Suprema
+                </span>
+                <span className="text-xs font-mono text-[#F59E0B] font-semibold">
+                  Tirada de Seis Nueves (9-9-9-9-9-9)
+                </span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#F4F4F6] tracking-wide mb-1">
+                {primaryHexagram.canonicalExtra.title}
+              </h3>
+              <p className="text-xs text-[#FFC09F] font-mono mb-3">
+                {primaryHexagram.canonicalExtra.chinese}
+              </p>
+
+              <div className="p-3.5 bg-[#0F0C08]/80 border border-[#F59E0B]/40 rounded-lg mb-3">
+                <p className="font-serif text-base sm:text-lg text-[#FDE68A] italic leading-relaxed mb-2">
+                  «{primaryHexagram.canonicalExtra.text}»
+                </p>
+                <p className="text-xs text-[#E5E5EB] leading-relaxed">
+                  {primaryHexagram.canonicalExtra.meaning}
+                </p>
+              </div>
+
+              <div className="p-2.5 bg-[#17120D] rounded-lg border border-[#3E2B1A] text-[11px] text-[#D4D4DC] leading-relaxed">
+                <strong className="text-[#F59E0B]">Instrucción de los Sabios (Zhu Xi / Shao Yong):</strong> Al mutar los seis trazos yang en Lo Creativo (1), no se leen las seis líneas individuales de forma aislada. Rige exclusivamente este oráculo supremo: la energía cósmica pura muta íntegramente hacia la perfecta entrega nutricia de Lo Receptivo (Hexagrama #2).
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isViewingDerived && isAllSixes && primaryHexagram.canonicalExtra && (
+        <div className="w-full bg-gradient-to-r from-[#20150A] via-[#1A1312] to-[#121217] border-2 border-[#EAB308] rounded-xl p-5 sm:p-6 shadow-2xl shadow-[#EAB308]/20 relative overflow-hidden">
+          <div className="absolute -right-6 -bottom-6 text-8xl font-chinese text-[#EAB308]/10 select-none pointer-events-none">
+            用六
+          </div>
+          <div className="flex items-start gap-3.5 relative z-10">
+            <div className="w-10 h-10 rounded-xl bg-[#EAB308]/20 border border-[#EAB308]/60 flex items-center justify-center shrink-0 text-[#EAB308] shadow-md">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-[#EAB308] text-[#0A0A0D]">
+                  Regla Canónica Suprema
+                </span>
+                <span className="text-xs font-mono text-[#EAB308] font-semibold">
+                  Tirada de Seis Seises (6-6-6-6-6-6)
+                </span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#F4F4F6] tracking-wide mb-1">
+                {primaryHexagram.canonicalExtra.title}
+              </h3>
+              <p className="text-xs text-[#FEF08A] font-mono mb-3">
+                {primaryHexagram.canonicalExtra.chinese}
+              </p>
+
+              <div className="p-3.5 bg-[#0F0C08]/80 border border-[#EAB308]/40 rounded-lg mb-3">
+                <p className="font-serif text-base sm:text-lg text-[#FEF08A] italic leading-relaxed mb-2">
+                  «{primaryHexagram.canonicalExtra.text}»
+                </p>
+                <p className="text-xs text-[#E5E5EB] leading-relaxed">
+                  {primaryHexagram.canonicalExtra.meaning}
+                </p>
+              </div>
+
+              <div className="p-2.5 bg-[#17120D] rounded-lg border border-[#3E2B1A] text-[11px] text-[#D4D4DC] leading-relaxed">
+                <strong className="text-[#EAB308]">Instrucción de los Sabios (Zhu Xi / Shao Yong):</strong> Al mutar los seis trazos yin en Lo Receptivo (2), no se leen las seis líneas individuales aisladas. Rige esta séptima cláusula: la entrega absoluta transmuta en luz creadora activa duradera, dando origen a Lo Creativo (Hexagrama #1).
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isViewingDerived && allLinesMutating && !isAllNines && !isAllSixes && derivedHexagram && (
+        <div className="w-full bg-gradient-to-r from-[#201015] via-[#18121A] to-[#121218] border border-[#FF6B2B]/60 rounded-xl p-5 shadow-xl">
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-lg bg-[#FF6B2B]/20 border border-[#FF6B2B]/50 flex items-center justify-center shrink-0 text-[#FF6B2B]">
+              <Layers className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF6B2B] font-bold block">
+                Regla Canónica Tradicional (六爻皆變)
+              </span>
+              <h4 className="font-serif font-bold text-base text-[#F4F4F6] mt-0.5">
+                Mutación Total de las Seis Líneas
+              </h4>
+              <p className="text-xs text-[#C8C8D6] mt-1 leading-relaxed">
+                Cuando las seis líneas mutan a la vez en cualquier hexagrama, la situación experimenta una transformación integral y radical. Según la regla de interpretación de Zhu Xi, el dictamen de <strong>«El Juicio» del Hexagrama Derivado (#{derivedHexagram.number} {derivedHexagram.nameEs})</strong> asume el rol regente principal en tu respuesta.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Beginner-Friendly Quick Summary Guide (Collapsible Dropdown Card) */}
       <div className="w-full bg-gradient-to-r from-[#171411] via-[#14141A] to-[#121216] border border-[#FF6B2B]/40 rounded-xl p-4 sm:p-5 shadow-lg transition-all">
@@ -242,7 +364,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
 
       {/* Main Hexagram Reading Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-        {/* Left Column: Hexagram Drawing & Trigram Architecture */}
+        {/* Left Column: Hexagram Drawing, Trigrams Anatomy, and Nuclear Hexagram */}
         <div className="lg:col-span-4 bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-xl">
           {/* Hexagram Seal & Number */}
           <div className="w-full flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-[#232330] mb-4">
@@ -278,7 +400,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             {currentHexagram.characterMeaning}
           </p>
 
-          {/* Graphical representation */}
+          {/* Graphical representation with lineImages support */}
           <HexagramDrawing
             lines={isViewingDerived ? derivedLines : lines}
             highlightLinePosition={selectedLinePos}
@@ -288,6 +410,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             hexagramNumber={currentHexagram.number}
             hexagramName={currentHexagram.nameEs}
             lineMeanings={currentHexagram.lines}
+            lineImages={currentHexagram.lineImages}
             mutatingLinePositions={!isViewingDerived ? mutatingLinePositions : []}
           />
 
@@ -297,7 +420,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             Toca cualquier línea del dibujo para abrir su significado en una ventana flotante
           </p>
 
-          {/* Trigrams Anatomy Card (Collapsible Dropdown Menu) */}
+          {/* Trigrams Anatomy Card with Canonical Attributes */}
           <div className="w-full mt-6 pt-4 border-t border-[#232330]">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-1.5">
@@ -331,42 +454,94 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             {isTrigramsOpen ? (
               <div className="space-y-3">
                 {/* Upper Trigram */}
-                <div className="p-3 bg-[#181820] rounded-lg border border-[#2B2B38] flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-[#A1A1B0] uppercase font-mono block">
-                      Trigrama Superior (Exterior)
-                    </span>
-                    <div className="text-sm font-bold text-[#F4F4F6] flex items-center gap-1.5">
-                      <span className="font-chinese text-base text-[#FF6B2B]">{upperTrigramInfo.chinese}</span>
-                      <span>{upperTrigramInfo.name} ({upperTrigramInfo.pinyin})</span>
+                <div className="p-3.5 bg-[#181820] rounded-lg border border-[#2B2B38]">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <span className="text-[10px] text-[#A1A1B0] uppercase font-mono block">
+                        Trigrama Superior (Exterior)
+                      </span>
+                      <div className="text-sm font-bold text-[#F4F4F6] flex items-center gap-1.5">
+                        <span className="font-chinese text-base text-[#FF6B2B]">{upperTrigramInfo.chinese}</span>
+                        <span>{upperTrigramInfo.name} ({upperTrigramInfo.pinyin})</span>
+                      </div>
+                      <span className="text-xs text-[#A1A1B0] block">{upperTrigramInfo.nature}</span>
                     </div>
-                    <span className="text-xs text-[#A1A1B0] block">{upperTrigramInfo.nature}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${upperTrigramInfo.name} en pinceladas`}>
+                        <TrigramCalligraphy lines={upperTrigramInfo.lines} size="md" />
+                      </div>
+                      <span className="text-2xl font-serif text-[#F59E0B]">{upperTrigramInfo.symbol}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${upperTrigramInfo.name} en pinceladas`}>
-                      <TrigramCalligraphy lines={upperTrigramInfo.lines} size="md" />
+
+                  {/* Canonical Attributes Grid */}
+                  <div className="pt-2 border-t border-[#252533] grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Rol Familiar</span>
+                      <span className="text-[#E2E2EC]">{upperTrigramInfo.family}</span>
                     </div>
-                    <span className="text-2xl font-serif text-[#F59E0B]">{upperTrigramInfo.symbol}</span>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Dirección</span>
+                      <span className="text-[#E2E2EC]">{upperTrigramInfo.direction}</span>
+                    </div>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Estación</span>
+                      <span className="text-[#E2E2EC]">{upperTrigramInfo.season}</span>
+                    </div>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Animal</span>
+                      <span className="text-[#E2E2EC]">{upperTrigramInfo.animal}</span>
+                    </div>
+                    <div className="text-[#A1A1B0] col-span-2">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Cuerpo / Esencia</span>
+                      <span className="text-[#E2E2EC]">{upperTrigramInfo.bodyPart} • {upperTrigramInfo.element}</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Lower Trigram */}
-                <div className="p-3 bg-[#181820] rounded-lg border border-[#2B2B38] flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-[#A1A1B0] uppercase font-mono block">
-                      Trigrama Inferior (Interior)
-                    </span>
-                    <div className="text-sm font-bold text-[#F4F4F6] flex items-center gap-1.5">
-                      <span className="font-chinese text-base text-[#FF6B2B]">{lowerTrigramInfo.chinese}</span>
-                      <span>{lowerTrigramInfo.name} ({lowerTrigramInfo.pinyin})</span>
+                <div className="p-3.5 bg-[#181820] rounded-lg border border-[#2B2B38]">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <span className="text-[10px] text-[#A1A1B0] uppercase font-mono block">
+                        Trigrama Inferior (Interior)
+                      </span>
+                      <div className="text-sm font-bold text-[#F4F4F6] flex items-center gap-1.5">
+                        <span className="font-chinese text-base text-[#FF6B2B]">{lowerTrigramInfo.chinese}</span>
+                        <span>{lowerTrigramInfo.name} ({lowerTrigramInfo.pinyin})</span>
+                      </div>
+                      <span className="text-xs text-[#A1A1B0] block">{lowerTrigramInfo.nature}</span>
                     </div>
-                    <span className="text-xs text-[#A1A1B0] block">{lowerTrigramInfo.nature}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${lowerTrigramInfo.name} en pinceladas`}>
+                        <TrigramCalligraphy lines={lowerTrigramInfo.lines} size="md" />
+                      </div>
+                      <span className="text-2xl font-serif text-[#F59E0B]">{lowerTrigramInfo.symbol}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-1.5 bg-[#121217] rounded-md border border-[#272733] shadow-xs" title={`Trigrama ${lowerTrigramInfo.name} en pinceladas`}>
-                      <TrigramCalligraphy lines={lowerTrigramInfo.lines} size="md" />
+
+                  {/* Canonical Attributes Grid */}
+                  <div className="pt-2 border-t border-[#252533] grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Rol Familiar</span>
+                      <span className="text-[#E2E2EC]">{lowerTrigramInfo.family}</span>
                     </div>
-                    <span className="text-2xl font-serif text-[#F59E0B]">{lowerTrigramInfo.symbol}</span>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Dirección</span>
+                      <span className="text-[#E2E2EC]">{lowerTrigramInfo.direction}</span>
+                    </div>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Estación</span>
+                      <span className="text-[#E2E2EC]">{lowerTrigramInfo.season}</span>
+                    </div>
+                    <div className="text-[#A1A1B0]">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Animal</span>
+                      <span className="text-[#E2E2EC]">{lowerTrigramInfo.animal}</span>
+                    </div>
+                    <div className="text-[#A1A1B0] col-span-2">
+                      <span className="text-[#71717A] block text-[9px] uppercase font-mono">Cuerpo / Esencia</span>
+                      <span className="text-[#E2E2EC]">{lowerTrigramInfo.bodyPart} • {lowerTrigramInfo.element}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -382,33 +557,136 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
               </div>
             )}
           </div>
+
+          {/* Nuclear Hexagram Section (Hù Guà • 互卦) */}
+          <div className="w-full mt-4 pt-4 border-t border-[#232330]">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-[#2DD4BF]" />
+                <span className="text-xs font-mono uppercase tracking-wider text-[#A1A1B0]">
+                  Hexagrama Nuclear (互卦)
+                </span>
+                <InfoButton
+                  title="Hexagrama Nuclear (Hù Guà • 互卦)"
+                  content="Se forma extrayendo las líneas 2-3-4 (trigrama nuclear inferior) y 3-4-5 (trigrama nuclear superior). Revela la semilla oculta, la tensión interna y las fuerzas invisibles que operan bajo la superficie del hexagrama."
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsNuclearOpen(!isNuclearOpen)}
+                className="p-1 rounded-md bg-[#1C1C26] hover:bg-[#282836] text-[#D1D1DC] border border-[#333345] transition-colors cursor-pointer text-[11px]"
+                aria-expanded={isNuclearOpen}
+                title={isNuclearOpen ? 'Plegar nuclear' : 'Desplegar nuclear'}
+              >
+                {isNuclearOpen ? (
+                  <ChevronUp className="w-3.5 h-3.5 text-[#2DD4BF]" />
+                ) : (
+                  <ChevronDown className="w-3.5 h-3.5 text-[#2DD4BF]" />
+                )}
+              </button>
+            </div>
+
+            {isNuclearOpen ? (
+              <div className="p-3 bg-[#13171B] border border-[#2DD4BF]/40 rounded-lg text-xs leading-relaxed animate-in fade-in duration-200">
+                <div className="flex items-center justify-between pb-2 border-b border-[#1E2E33] mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-chinese text-xl font-bold text-[#2DD4BF]">
+                      {nuclearData.hexagram.chinese}
+                    </span>
+                    <div>
+                      <div className="font-bold text-[#F4F4F6]">
+                        #{nuclearData.hexagram.number} {nuclearData.hexagram.nameEs}
+                      </div>
+                      <div className="text-[10px] font-mono text-[#2DD4BF]">
+                        {nuclearData.hexagram.pinyin}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right text-[10px] font-mono text-[#94A3B8]">
+                    <div>Sup: {nuclearData.upperNuclearTrigram.symbol} {nuclearData.upperNuclearTrigram.name}</div>
+                    <div>Inf: {nuclearData.lowerNuclearTrigram.symbol} {nuclearData.lowerNuclearTrigram.name}</div>
+                  </div>
+                </div>
+
+                <p className="text-[#C8D3D8] text-[11px] mb-2">
+                  <strong className="text-[#2DD4BF]">Fuerza Latente Interior:</strong> {nuclearData.hexagram.characterMeaning}.
+                </p>
+                <p className="text-[10px] text-[#8EA2AA] italic">
+                  Las líneas 2, 3, 4 y 5 revelan la dinámica subterránea de la que brota la situación externa.
+                </p>
+              </div>
+            ) : (
+              <div
+                onClick={() => setIsNuclearOpen(true)}
+                className="p-2 bg-[#14161A] rounded-lg border border-[#2B2B38] text-[11px] text-[#A1A1B0] flex items-center justify-between cursor-pointer hover:border-[#2DD4BF]/50 transition-colors"
+              >
+                <span className="truncate">
+                  Núcleo: #{nuclearData.hexagram.number} {nuclearData.hexagram.chinese} ({nuclearData.hexagram.nameEs})
+                </span>
+                <span className="text-[10px] text-[#2DD4BF] font-mono ml-2 shrink-0">Ver +</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Right Column: Texts (El Juicio, Imagen, Líneas Mutantes, Seis Líneas) */}
+        {/* Right Column: Texts (El Juicio, Tuàn Zhuàn, La Imagen, Wényán, Líneas Mutantes, Seis Líneas, y Séptima Entrada) */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-          {/* El Juicio */}
+          {/* El Juicio (Tuàn • 彖傳) */}
           <div className="bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-7 shadow-xl">
-            <div className="flex items-center gap-2 pb-3 border-b border-[#232330] mb-4">
-              <span className="w-2.5 h-2.5 bg-[#FF6B2B] rounded-full shadow-[0_0_6px_#FF6B2B]" />
-              <h4 className="font-serif font-bold text-lg text-[#F4F4F6] tracking-wide">
-                El Juicio (Tuàn • 彖傳)
-              </h4>
-              <InfoButton
-                title="El Juicio (Tuàn • 彖傳)"
-                content="Atribuido al Rey Wen, define la cualidad intrínseca del momento y orienta sobre si conviene emprender acciones audaces, aguardar o perseverar en la rectitud."
-              />
+            <div className="flex items-center justify-between pb-3 border-b border-[#232330] mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-[#FF6B2B] rounded-full shadow-[0_0_6px_#FF6B2B]" />
+                <h4 className="font-serif font-bold text-lg text-[#F4F4F6] tracking-wide">
+                  El Juicio (Tuàn • 彖傳)
+                </h4>
+                <InfoButton
+                  title="El Juicio (Tuàn • 彖傳)"
+                  content="Atribuido al Rey Wen, define la cualidad intrínseca del momento y orienta sobre si conviene emprender acciones audaces, aguardar o perseverar en la rectitud."
+                />
+              </div>
+
+              {currentHexagram.tuanCommentary && (
+                <button
+                  type="button"
+                  onClick={() => setIsTuanOpen(!isTuanOpen)}
+                  className="px-2.5 py-1 rounded-lg bg-[#1B1B24] hover:bg-[#252533] text-[#F59E0B] border border-[#3E342B] text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+                  title="Comentario de las Diez Alas atribuido a Confucio"
+                >
+                  <ScrollText className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span className="hidden sm:inline">Tuàn Zhuàn (彖傳)</span>
+                  <span className="sm:hidden">Alas</span>
+                  {isTuanOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+              )}
             </div>
 
             <p className="font-serif text-base sm:text-lg text-[#E4E4EB] leading-relaxed text-justify mb-4">
               {currentHexagram.judgment}
             </p>
 
+            {/* Tuàn Zhuàn Commentary (Diez Alas de Confucio) */}
+            {currentHexagram.tuanCommentary && isTuanOpen && (
+              <div className="p-4 bg-[#181412] rounded-lg border border-[#FF6B2B]/40 text-xs text-[#E8D4C8] mb-4 animate-in fade-in duration-200">
+                <div className="flex items-center gap-1.5 text-[#FF8F50] font-mono font-bold uppercase text-[11px] mb-1.5">
+                  <ScrollText className="w-3.5 h-3.5" />
+                  <span>Comentario Tuàn Zhuàn (彖傳 • Las Diez Alas)</span>
+                </div>
+                <p className="font-serif text-sm italic leading-relaxed text-[#F2E5DC] mb-2">
+                  {currentHexagram.tuanCommentary}
+                </p>
+                <span className="text-[10px] text-[#A19188] block">
+                  Exégesis canónica tradicional que dilucida la armonía cósmica y las razones éticas del dictamen.
+                </span>
+              </div>
+            )}
+
             <div className="p-3 bg-[#181820] rounded-lg border border-[#2B2B38] text-xs text-[#A8A8B6] leading-relaxed">
               <strong className="text-[#F59E0B]">¿Cómo interpretarlo?</strong> El Juicio define la situación general y la disposición interna con la que debes abordar tu pregunta para actuar con sabiduría.
             </div>
           </div>
 
-          {/* La Imagen (Xiàng • 象傳) - Menú desplegable */}
+          {/* La Imagen (Xiàng • 象傳) */}
           <div className="bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-7 shadow-xl transition-all">
             <div className="flex items-center justify-between pb-3 border-b border-[#232330] mb-4">
               <div className="flex items-center gap-2">
@@ -463,7 +741,70 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             )}
           </div>
 
-          {/* Mutating Lines Section (Collapsible Dropdown Card) */}
+          {/* Comentario Wényán (Wényán Zhuàn • 文言傳) para Hexagramas 1 y 2 */}
+          {currentHexagram.wenyanCommentary && (
+            <div className="bg-[#151318] border border-[#F59E0B]/50 rounded-xl p-4 sm:p-6 shadow-xl transition-all">
+              <div className="flex items-center justify-between pb-3 border-b border-[#2C241E] mb-3">
+                <div className="flex items-center gap-2">
+                  <Feather className="w-4 h-4 text-[#F59E0B]" />
+                  <h4 className="font-serif font-bold text-base text-[#F4F4F6] tracking-wide">
+                    Comentario Wényán (文言傳 • Sobre las Palabras)
+                  </h4>
+                  <InfoButton
+                    title="Comentario Wényán (文言傳)"
+                    content="Doctrina filosófica suprema reservada exclusivamente a los dos hexagramas primordiales (Cielo y Tierra), profundizando en las virtudes éticas cardinales del ser humano sabio."
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsWenyanOpen(!isWenyanOpen)}
+                  className="p-1.5 rounded-lg bg-[#201C18] hover:bg-[#2B2520] text-[#E0D5CC] border border-[#3E3326] transition-colors cursor-pointer flex items-center gap-1 text-xs"
+                  aria-expanded={isWenyanOpen}
+                >
+                  <span className="text-[11px] text-[#A1A1B0] hidden xs:inline">
+                    {isWenyanOpen ? 'Plegar' : 'Desplegar'}
+                  </span>
+                  {isWenyanOpen ? (
+                    <ChevronUp className="w-4 h-4 text-[#F59E0B]" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[#F59E0B]" />
+                  )}
+                </button>
+              </div>
+
+              {isWenyanOpen ? (
+                <div className="space-y-3 animate-in fade-in duration-150">
+                  <p className="font-serif text-sm sm:text-base text-[#F3E8DF] leading-relaxed text-justify italic">
+                    {currentHexagram.wenyanCommentary}
+                  </p>
+                  <div className="text-[11px] text-[#A6998E] bg-[#0E0C0A] p-2.5 rounded-lg border border-[#29221C]">
+                    {currentHexagram.number === 1 ? (
+                      <span>
+                        • <strong>Las Cuatro Virtudes Cardinales de Lo Creativo:</strong> Benevolencia (Yuán), Conveniencia armónica (Hēng), Justicia recta (Lì) y Perseverancia inquebrantable (Zhēn).
+                      </span>
+                    ) : (
+                      <span>
+                        • <strong>La Doctrina de Lo Receptivo:</strong> La reverencia interior para enderezar el corazón y la justicia para cuadrar los actos externos, asegurando que la virtud no decaiga jamás.
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onClick={() => setIsWenyanOpen(true)}
+                  className="text-xs text-[#A8A8B6] flex items-center justify-between cursor-pointer hover:text-[#F4F4F6] py-1"
+                >
+                  <span className="line-clamp-1 italic text-[#D8C9BC]">
+                    {currentHexagram.wenyanCommentary}
+                  </span>
+                  <span className="text-[11px] text-[#F59E0B] shrink-0 ml-2 font-mono">Leer doctrina +</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Mutating Lines Section (Collapsible Dropdown Card with Line Images) */}
           {!isViewingDerived && mutatingLinePositions.length > 0 && (
             <div className="bg-[#161311] border border-[#FF6B2B]/50 rounded-xl p-4 sm:p-7 shadow-xl transition-all">
               <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#332219] mb-4">
@@ -514,6 +855,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                       const lineData = lines.find((l) => l.position === pos);
                       const isSelected = selectedLinePos === pos;
                       const lineText = primaryHexagram.lines[pos - 1];
+                      const lineImage = primaryHexagram.lineImages?.[pos - 1];
                       const meta = lineData ? getLineMeta(lineData.value) : null;
 
                       return (
@@ -543,6 +885,16 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                           <p className="font-serif text-base text-[#E2E2EB] leading-relaxed">
                             {lineText}
                           </p>
+
+                          {/* Xiǎo Xiàng Image for Mutating Line */}
+                          {lineImage && (
+                            <div className="mt-2.5 pt-2 border-t border-[#2F241F] text-xs text-[#C5C5D2] flex items-start gap-1.5 bg-[#120F0D] p-2 rounded-md">
+                              <span className="text-[10px] font-mono text-[#F59E0B] font-semibold uppercase shrink-0">
+                                Xiǎo Xiàng:
+                              </span>
+                              <span className="italic text-[#E0D0C5]">{lineImage}</span>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -599,7 +951,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             </div>
           )}
 
-          {/* All lines exploration section with interactive line filter */}
+          {/* All lines exploration section with interactive line filter and Xiǎo Xiàng */}
           <div className="bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-6 shadow-xl transition-all">
             <div className="flex items-center gap-2 pb-3 border-b border-[#232330] mb-4">
               <BookOpen className="w-4 h-4 text-[#FF6B2B]" />
@@ -716,16 +1068,17 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
             </div>
 
             <p className="text-xs text-[#A1A1B0] mb-3">
-              Lectura completa de las seis posiciones (de la base a la cima):
+              Lectura completa de las seis posiciones (de la base a la cima) con su correspondiente Imagen Menor (Xiǎo Xiàng):
             </p>
 
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {currentHexagram.lines
                 .map((text, idx) => ({ text, lineNum: idx + 1 }))
                 .map(({ text, lineNum }) => {
                   const isMutatingHere =
                     !isViewingDerived && mutatingLinePositions.includes(lineNum);
                   const isSelected = selectedLinePos === lineNum;
+                  const lineImage = currentHexagram.lineImages?.[lineNum - 1];
 
                   return (
                     <div
@@ -733,7 +1086,7 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                       onClick={() => setSelectedLinePos(lineNum)}
                       className={`p-3.5 rounded-lg text-xs sm:text-sm font-serif leading-relaxed transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#1E1915] border border-[#FF6B2B] text-[#F4F4F6]'
+                          ? 'bg-[#1E1915] border border-[#FF6B2B] text-[#F4F4F6] shadow-sm'
                           : isMutatingHere
                           ? 'bg-[#191412] border border-[#FF6B2B]/40 text-[#E4E4EC]'
                           : 'bg-[#16161D] border border-[#262633] text-[#A1A1B0] hover:text-[#F4F4F6] hover:bg-[#1C1C24]'
@@ -754,11 +1107,48 @@ export const HexagramDetail: React.FC<HexagramDetailProps> = ({
                           </span>
                         )}
                       </div>
-                      <div>{text}</div>
+
+                      <div className="text-[#E6E6EE] mb-1">{text}</div>
+
+                      {/* Xiǎo Xiàng Image */}
+                      {lineImage && (
+                        <div className="mt-2 pt-2 border-t border-[#232330] text-xs text-[#A8A8B6] flex items-start gap-1.5 bg-[#0F0F14]/70 p-2 rounded-md font-sans">
+                          <span className="text-[10px] font-mono text-[#F59E0B] font-semibold uppercase shrink-0">
+                            Xiǎo Xiàng:
+                          </span>
+                          <span className="italic text-[#D4D4E0]">{lineImage}</span>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
             </div>
+
+            {/* Canonical Extra 7th Entry for Hexagram 1 and 2 (用九 / 用六) */}
+            {currentHexagram.canonicalExtra && (
+              <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-[#1F180F] to-[#16141C] border border-[#F59E0B]/60 shadow-lg">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-[#F59E0B] text-[#0A0A0D] uppercase">
+                    Séptima Entrada Canónica
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#F59E0B]">
+                    {currentHexagram.canonicalExtra.title}
+                  </span>
+                </div>
+                <div className="font-mono text-xs text-[#FEF08A] mb-1">
+                  {currentHexagram.canonicalExtra.chinese}
+                </div>
+                <p className="font-serif text-sm sm:text-base text-[#F4F4F6] italic mb-1.5">
+                  «{currentHexagram.canonicalExtra.text}»
+                </p>
+                <p className="text-xs text-[#C8C8D6] leading-relaxed">
+                  {currentHexagram.canonicalExtra.meaning}
+                </p>
+                <div className="mt-2 text-[10px] text-[#A1A1B0] font-mono">
+                  * Se aplica cuando los 6 trazos de este hexagrama mutan al unísono ({currentHexagram.number === 1 ? 'seis 9s' : 'seis 6s'}).
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

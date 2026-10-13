@@ -46,11 +46,31 @@ export function generateLine(position: number): HexagramLine {
   };
 }
 
+export interface HexagramCalculationResult {
+  primaryHexagram: HexagramData;
+  derivedHexagram?: HexagramData;
+  mutatingLinePositions: number[];
+  allLinesMutating: boolean;
+  isAllNines: boolean;
+  isAllSixes: boolean;
+  activeCanonicalExtra?: HexagramData['canonicalExtra'];
+  specialCanonicalRule?: {
+    type: 'yong_jiu' | 'yong_liu' | 'all_mutating';
+    title: string;
+    chineseTitle: string;
+    subtitle: string;
+    ruleExplanation: string;
+  };
+  nuclearHexagram: HexagramData;
+  nuclearInfo: ReturnType<typeof getNuclearHexagram>;
+}
+
 /**
  * Calculates primary hexagram and secondary (derived/mutated) hexagram from 6 lines.
  * Lines are ordered from 1 (bottom / inicial) to 6 (top / superior).
+ * Also handles canonical special cases (用九 when all 9s, 用六 when all 6s, and all mutating).
  */
-export function calculateHexagramsFromLines(lines: HexagramLine[]) {
+export function calculateHexagramsFromLines(lines: HexagramLine[]): HexagramCalculationResult {
   if (lines.length !== 6) {
     throw new Error('Se requieren exactamente 6 líneas para calcular el hexagrama.');
   }
@@ -62,6 +82,11 @@ export function calculateHexagramsFromLines(lines: HexagramLine[]) {
   // Identify mutating lines (1-indexed positions)
   const mutatingLines = lines.filter((l) => l.isMutating);
   const mutatingLinePositions = mutatingLines.map((l) => l.position);
+  const allLinesMutating = mutatingLines.length === 6;
+
+  // Check specific 6-line mutation cases
+  const isAllNines = lines.every((l) => l.value === 9); // Hex 1 -> Hex 2 with 用九
+  const isAllSixes = lines.every((l) => l.value === 6); // Hex 2 -> Hex 1 with 用六
 
   // Calculate secondary hexagram if there are mutating lines
   let derivedHexagram = undefined;
@@ -82,10 +107,55 @@ export function calculateHexagramsFromLines(lines: HexagramLine[]) {
     derivedHexagram = getHexagramByLines(derivedBits);
   }
 
+  // Special canonical rule resolution according to Zhu Xi / Shao Yong / Master Gao Heng
+  let activeCanonicalExtra: HexagramData['canonicalExtra'] | undefined = undefined;
+  let specialCanonicalRule: HexagramCalculationResult['specialCanonicalRule'] = undefined;
+
+  if (isAllNines && primaryHexagram.canonicalExtra) {
+    activeCanonicalExtra = primaryHexagram.canonicalExtra;
+    specialCanonicalRule = {
+      type: 'yong_jiu',
+      title: 'Regla Canónica Suprema: Al Usar los Nueves (Yòng Jiǔ)',
+      chineseTitle: '用九：见群龙无首，吉。',
+      subtitle: 'Hexagrama 1 muta íntegramente hacia el Hexagrama 2',
+      ruleExplanation:
+        'Cuando los seis trazos de Lo Creativo (乾) son nueve (Viejo Yang), la tradición clásica de los maestros (Zhu Xi, Shao Yong) establece que no se leen las líneas 1 a 6 por separado. Se consulta el texto especial canónico «用九» (Yòng Jiǔ): los dragones celestes actúan al unísono sin pretender cabezas rectoras tiránicas; la máxima plenitud yang se transforma en la perfecta docilidad receptiva de Lo Receptivo (坤).',
+    };
+  } else if (isAllSixes && primaryHexagram.canonicalExtra) {
+    activeCanonicalExtra = primaryHexagram.canonicalExtra;
+    specialCanonicalRule = {
+      type: 'yong_liu',
+      title: 'Regla Canónica Suprema: Al Usar los Seises (Yòng Liù)',
+      chineseTitle: '用六：利永贞。',
+      subtitle: 'Hexagrama 2 muta íntegramente hacia el Hexagrama 1',
+      ruleExplanation:
+        'Cuando los seis trazos de Lo Receptivo (坤) son seis (Viejo Yin), la regla canónica milenaria determina que no se leen las líneas individuales 1 a 6. Se consulta el texto especial «用六» (Yòng Liù): la entrega fértil y absoluta transmuta en luz creadora duradera. Favorable es la perseverancia duradera, dando origen a Lo Creativo (乾).',
+    };
+  } else if (allLinesMutating) {
+    specialCanonicalRule = {
+      type: 'all_mutating',
+      title: 'Regla de Mutación Total de las Seis Líneas',
+      chineseTitle: '六爻皆變',
+      subtitle: `Hexagrama #${primaryHexagram.number} transita íntegramente a #${derivedHexagram?.number}`,
+      ruleExplanation:
+        'Cuando las seis líneas de un hexagrama mutan a la vez (en cualquier hexagrama del 3 al 64), la situación vive una metamorfosis radical y completa. Según las reglas tradicionales de adivinación del I Ching de Zhu Xi, el dictamen del Hexagrama Derivado (Juicio) asume la máxima regencia interpretativa, señalando hacia dónde se transfigura el destino.',
+    };
+  }
+
+  // Calculate Nuclear Hexagram
+  const nuclearInfo = getNuclearHexagram(lines);
+
   return {
     primaryHexagram,
     derivedHexagram,
     mutatingLinePositions,
+    allLinesMutating,
+    isAllNines,
+    isAllSixes,
+    activeCanonicalExtra,
+    specialCanonicalRule,
+    nuclearHexagram: nuclearInfo.hexagram,
+    nuclearInfo,
   };
 }
 
