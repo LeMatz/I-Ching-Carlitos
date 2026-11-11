@@ -61,8 +61,6 @@ export interface HexagramCalculationResult {
     subtitle: string;
     ruleExplanation: string;
   };
-  nuclearHexagram: HexagramData;
-  nuclearInfo: ReturnType<typeof getNuclearHexagram>;
 }
 
 /**
@@ -138,12 +136,9 @@ export function calculateHexagramsFromLines(lines: HexagramLine[]): HexagramCalc
       chineseTitle: '六爻皆變',
       subtitle: `Hexagrama #${primaryHexagram.number} transita íntegramente a #${derivedHexagram?.number}`,
       ruleExplanation:
-        'Cuando las seis líneas de un hexagrama mutan a la vez (en cualquier hexagrama del 3 al 64), la situación vive una metamorfosis radical y completa. Según las reglas tradicionales de adivinación del I Ching de Zhu Xi, el dictamen del Hexagrama Derivado (Juicio) asume la máxima regencia interpretativa, señalando hacia dónde se transfigura el destino.',
+        'Cuando las seis líneas de un hexagrama mutan a la vez (en cualquier hexagrama del 3 al 64), la situación vive una metamorfosis radical y completa. Según las reglas interpretativas tradicionales del I Ching formuladas por Zhu Xi, el dictamen del Hexagrama Derivado (Juicio) asume la máxima regencia interpretativa, señalando hacia dónde se transfigura la situación.',
     };
   }
-
-  // Calculate Nuclear Hexagram
-  const nuclearInfo = getNuclearHexagram(lines);
 
   return {
     primaryHexagram,
@@ -154,8 +149,6 @@ export function calculateHexagramsFromLines(lines: HexagramLine[]): HexagramCalc
     isAllSixes,
     activeCanonicalExtra,
     specialCanonicalRule,
-    nuclearHexagram: nuclearInfo.hexagram,
-    nuclearInfo,
   };
 }
 
@@ -205,44 +198,3 @@ export function getLineMeta(value: LineValue): {
   }
 }
 
-/**
-  * Calcula el Hexagrama Nuclear (互卦 • Hù Guà) a partir de las 6 líneas.
-  * - Trigrama nuclear inferior: líneas 2, 3 y 4 del hexagrama original.
-  * - Trigrama nuclear superior: líneas 3, 4 y 5 del hexagrama original.
-  * Las 6 líneas resultantes forman el núcleo latente y la tensión interior de la situación.
-  */
-export function getNuclearHexagram(
-  input: HexagramLine[] | (0 | 1)[] | string
-): {
-  hexagram: HexagramData;
-  lowerNuclearTrigram: TrigramInfo;
-  upperNuclearTrigram: TrigramInfo;
-  nuclearBits: (0 | 1)[];
-} {
-  let bits: (0 | 1)[];
-
-  if (typeof input === 'string') {
-    bits = input.split('').map((c) => (c === '1' ? 1 : 0) as 0 | 1);
-  } else if (input.length > 0 && typeof input[0] === 'object') {
-    bits = (input as HexagramLine[]).map((l) => (l.isYang ? 1 : 0) as 0 | 1);
-  } else {
-    bits = input as (0 | 1)[];
-  }
-
-  // Líneas 1 a 6 indexadas de 0 a 5:
-  // Línea 2 = bits[1], Línea 3 = bits[2], Línea 4 = bits[3], Línea 5 = bits[4]
-  const lowerLines: [0 | 1, 0 | 1, 0 | 1] = [bits[1], bits[2], bits[3]];
-  const upperLines: [0 | 1, 0 | 1, 0 | 1] = [bits[2], bits[3], bits[4]];
-
-  const nuclearBits: (0 | 1)[] = [...lowerLines, ...upperLines];
-  const hexagram = getHexagramByLines(nuclearBits);
-  const lowerNuclearTrigram = getTrigramFromLines(lowerLines[0], lowerLines[1], lowerLines[2]);
-  const upperNuclearTrigram = getTrigramFromLines(upperLines[0], upperLines[1], upperLines[2]);
-
-  return {
-    hexagram,
-    lowerNuclearTrigram,
-    upperNuclearTrigram,
-    nuclearBits,
-  };
-}

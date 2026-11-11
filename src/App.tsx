@@ -75,6 +75,7 @@ export default function App() {
     setDerivedHexagram(undefined);
     setMutatingLinePositions([]);
     setView('casting');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   // Hexagram casting completed
@@ -128,6 +129,7 @@ export default function App() {
     }
 
     setView('result');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   // Open past consultation from history
@@ -142,6 +144,7 @@ export default function App() {
     );
     setMutatingLinePositions(record.mutatingLinePositions);
     setView('result');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   // Toggle manual protection on a consultation record
@@ -191,6 +194,7 @@ export default function App() {
     setDerivedHexagram(undefined);
     setMutatingLinePositions([]);
     setView('result');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   return (

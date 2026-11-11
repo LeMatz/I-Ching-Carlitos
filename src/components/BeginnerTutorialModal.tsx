@@ -50,7 +50,7 @@ export const BeginnerTutorialModal: React.FC<BeginnerTutorialModalProps> = ({
     {
       id: 'intro',
       title: '¿Qué es el I Ching?',
-      subtitle: 'El Oráculo del Cambio en 60 segundos',
+      subtitle: 'El Libro de las Mutaciones en 60 segundos',
       icon: Compass,
     },
     {

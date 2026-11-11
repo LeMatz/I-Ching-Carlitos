@@ -135,3 +135,78 @@ export function getTrigramFromLines(l1: 0 | 1, l2: 0 | 1, l3: 0 | 1): TrigramInf
   }
   return TRIGRAMS['Cielo'];
 }
+
+export interface SimplifiedTrigramInfo {
+  quality: string;
+  explanation: string;
+  naturalImage: string;
+}
+
+export const SIMPLIFIED_TRIGRAMS: Record<string, SimplifiedTrigramInfo> = {
+  Cielo: {
+    naturalImage: 'Cielo',
+    quality: 'fuerte',
+    explanation: 'Energía que inicia y empuja; lo firme y activo que no cede ante la dificultad.',
+  },
+  Tierra: {
+    naturalImage: 'Tierra',
+    quality: 'dócil',
+    explanation: 'Receptividad que acoge y sostiene con paciencia; da forma a lo que otro inicia.',
+  },
+  Trueno: {
+    naturalImage: 'Trueno',
+    quality: 'mover',
+    explanation: 'Impulso repentino que despierta con fuerza y pone en marcha todo lo estancado.',
+  },
+  Viento: {
+    naturalImage: 'Viento',
+    quality: 'penetrar',
+    explanation: 'Influencia suave y constante que penetra poco a poco, por persistencia y no por fuerza.',
+  },
+  Agua: {
+    naturalImage: 'Agua',
+    quality: 'hundir',
+    explanation: 'Peligro y profundidad; lo que fluye atravesando obstáculos sin perder jamás su naturaleza.',
+  },
+  Fuego: {
+    naturalImage: 'Fuego',
+    quality: 'adherir',
+    explanation: 'Claridad que ilumina y revela; depende de aquello a lo que se adhiere para arder.',
+  },
+  Montaña: {
+    naturalImage: 'Montaña',
+    quality: 'detener',
+    explanation: 'Detención y quietud; marca un límite firme y permite reposar antes de seguir avanzando.',
+  },
+  Lago: {
+    naturalImage: 'Lago',
+    quality: 'alegrar',
+    explanation: 'Alegría y apertura transparente; el placer del intercambio sincero y la conversación compartida.',
+  },
+};
+
+export function getSimplifiedTrigram(nameOrId: string): SimplifiedTrigramInfo {
+  if (!nameOrId) return SIMPLIFIED_TRIGRAMS['Cielo'];
+  const n = nameOrId.toLowerCase();
+  if (n.includes('ciel')) return SIMPLIFIED_TRIGRAMS['Cielo'];
+  if (n.includes('tierr')) return SIMPLIFIED_TRIGRAMS['Tierra'];
+  if (n.includes('truen')) return SIMPLIFIED_TRIGRAMS['Trueno'];
+  if (n.includes('vient')) return SIMPLIFIED_TRIGRAMS['Viento'];
+  if (n.includes('agu')) return SIMPLIFIED_TRIGRAMS['Agua'];
+  if (n.includes('fueg')) return SIMPLIFIED_TRIGRAMS['Fuego'];
+  if (n.includes('monta')) return SIMPLIFIED_TRIGRAMS['Montaña'];
+  if (n.includes('lag')) return SIMPLIFIED_TRIGRAMS['Lago'];
+  return SIMPLIFIED_TRIGRAMS[nameOrId] || SIMPLIFIED_TRIGRAMS['Cielo'];
+}
+
+/**
+ * Línea de síntesis generada con la fórmula canónica:
+ * "{imagen inferior} ({cualidad inferior}) bajo {imagen superior} ({cualidad superior})"
+ * Ejemplo (Hexagrama 62): "Trueno (mover) bajo Montaña (detener)"
+ */
+export function getTrigramSynthesis(lowerName: string, upperName: string): string {
+  const lower = getSimplifiedTrigram(lowerName);
+  const upper = getSimplifiedTrigram(upperName);
+  return `${lower.naturalImage} (${lower.quality}) bajo ${upper.naturalImage} (${upper.quality})`;
+}
+

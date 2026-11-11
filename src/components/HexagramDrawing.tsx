@@ -133,10 +133,10 @@ export const HexagramDrawing: React.FC<HexagramDrawingProps> = ({
                 onClick={() => handleLineClick(line.position)}
                 className={`group flex items-center justify-between gap-2.5 sm:gap-3 ${
                   lineHeights[size]
-                } cursor-pointer ${
+                } cursor-pointer px-1 rounded-md ${
                   isSelected
-                    ? 'ring-2 ring-[#FF6B2B] ring-offset-2 ring-offset-[#121216] rounded-md px-1.5 bg-[#1C1C24]'
-                    : 'px-1 hover:bg-[#1A1A22] rounded-md'
+                    ? 'bg-[#1E1E28]'
+                    : 'hover:bg-[#1A1A22]'
                 } transition-all`}
                 title={`Línea ${line.position} • Toca para abrir su significado en ventana flotante`}
               >
@@ -332,10 +332,10 @@ export const HexagramDrawing: React.FC<HexagramDrawingProps> = ({
                 </div>
               )}
 
-              {/* Oracular Interpretation of the Line (repeated from below) */}
+              {/* Interpretation of the Line (repeated from below) */}
               <div className="mb-4">
                 <span className="text-[11px] font-mono text-[#F59E0B] uppercase tracking-wider block mb-1.5">
-                  Significado e Interpretación Oracular:
+                  Significado e Interpretación de la Línea:
                 </span>
                 <div className="p-4 rounded-lg bg-[#121218] border border-[#FF6B2B]/40 text-xs sm:text-sm font-serif leading-relaxed text-[#F4F4F6] shadow-inner">
                   {activeMeaning ? (

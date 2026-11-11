@@ -125,11 +125,11 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Agua',
     binaryKey: '010001',
     judgment:
-      'La Necedad Juvenil tiene éxito. No soy yo quien busca al joven inexperto; el joven inexperto me busca a mí. Al primer oráculo respondo; dos y tres veces es importunidad, y al importuno no respondo. Es propicia la perseverancia.',
+      'La Necedad Juvenil tiene éxito. No soy yo quien busca al joven inexperto; el joven inexperto me busca a mí. A la primera consulta respondo; dos y tres veces es importunidad, y a la insistencia no respondo. Es propicia la perseverancia.',
     image:
       'Al pie de la montaña brota un manantial: la imagen de la juventud. El noble nutre su carácter mediante la firmeza y la virtud.',
     tuanCommentary:
-      '«Bajo la montaña ruge el abismo: peligro y detención conforman la inexperiencia. Mas el aprendiz tiene éxito porque actúa en el momento justo mediante la enseñanza debida. El primer oráculo responde a la sinceridad; la reiteración egoísta es importunidad y enturbia la mente.»',
+      '«Bajo la montaña ruge el abismo: peligro y detención conforman la inexperiencia. Mas el aprendiz tiene éxito porque actúa en el momento justo mediante la enseñanza debida. La primera consulta responde a la sinceridad; la reiteración egoísta es importunidad y enturbia la mente.»',
     lines: [
       'Línea 1 (Seis al comienzo): Desarrollar al ignorante exige disciplina, mas conviene quitarle los grillos antes del resentimiento.',
       'Línea 2 (Nueve en el segundo lugar): Soportar a los inexpertos con bondad trae ventura. Saber acoger a las naturalezas débiles engendra armonía.',
@@ -253,7 +253,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
     lowerTrigram: 'Tierra',
     binaryKey: '000010',
     judgment:
-      'La Solidaridad trae ventura. Indaga el oráculo una vez más: ¿hay en ti grandeza, constancia y pureza? Si es así, no hay falta. Los rezagados sufrirán desventura.',
+      'La Solidaridad trae ventura. Indaga en tu interior una vez más: ¿hay en ti grandeza, constancia y pureza? Si es así, no hay falta. Los rezagados sufrirán desventura.',
     image:
       'Sobre la tierra fluye el agua: la imagen de la unión fraternal. Así los antiguos reyes cuidaban los lazos con los pueblos vecinos.',
     lines: [
@@ -987,7 +987,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 2 (Nueve en el segundo lugar): La perseverancia es propicia. Emprender algo con desmedro del propio honor trae desventura.',
       'Línea 3 (Seis en el tercer lugar): Cuando tres viajan juntos, uno se separa; cuando uno viaja solo, encuentra a su compañero.',
       'Línea 4 (Seis en el cuarto lugar): Menguar los propios defectos hace que el otro se acerque con alegría: sin falta.',
-      'Línea 5 (Seis en el quinto lugar): Alguien lo enriquece con diez pares de tortugas oraculares; nadie puede contradecirlo: suprema ventura.',
+      'Línea 5 (Seis en el quinto lugar): Alguien lo enriquece con diez pares de caparazones sagrados de tortuga; nadie puede contradecirlo: suprema ventura.',
       'Línea 6 (Nueve en la cima): Sin mermarlo se le beneficia, sin falta. La perseverancia trae ventura. Es propicio tener adónde ir. Se obtienen servidores, pero no un hogar.',
     ],
   },
@@ -1163,7 +1163,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Línea 2 (Seis en el segundo lugar): En su propio día es propicio transformar y emprender la acción: ventura sin falta.',
       'Línea 3 (Nueve en el tercer lugar): Iniciar la acción antes de tiempo trae desventura. Cuando la necesidad de cambio ha sido debatida tres veces, actúa.',
       'Línea 4 (Nueve en el cuarto lugar): El remordimiento desaparece; se tiene confianza. Cambiar el orden establecido trae ventura.',
-      'Línea 5 (Nueve en el quinto lugar): El gran hombre muda como un tigre: sus rayas se vuelven nítidas y brillantes sin necesidad de consultar el oráculo.',
+      'Línea 5 (Nueve en el quinto lugar): El gran hombre muda como un tigre: sus rayas se vuelven nítidas y brillantes sin necesidad de indagación previa.',
       'Línea 6 (Seis en la cima): El noble muda como un leopardo, el hombre común muda de rostro. Emprender una expedición militar trae desventura; permanecer perseverando trae ventura.',
     ],
   },
@@ -1336,7 +1336,7 @@ export const HEXAGRAMS: Record<number, HexagramData> = {
       'Vientos que se suceden sin cesar: la imagen de la penetración suave. El noble difunde sus principios y ejecuta sus asuntos con perseverancia.',
     lines: [
       'Línea 1 (Seis al comienzo): En el avance y en el retroceso es propicia la disciplina del guerrero firme.',
-      'Línea 2 (Nueve en el segundo lugar): Penetración bajo la cama; se recurre a sacerdotes y adivinos en abundancia: ventura sin falta.',
+      'Línea 2 (Nueve en el segundo lugar): Penetración bajo la cama; se recurre a sacerdotes y oficiantes en abundancia: ventura sin falta.',
       'Línea 3 (Nueve en el tercer lugar): Penetración reiterada y forzada acarrea vergüenza.',
       'Línea 4 (Seis en el cuarto lugar): El pesar desaparece; en la cacería se consiguen tres clases de presas útiles.',
       'Línea 5 (Nueve en el quinto lugar): Perseverancia venturosa; los remordimientos desaparecen; nada que no sea propicio. Sin comienzo, pero con final. Tres días antes del cambio, tres días después del cambio: ventura.',

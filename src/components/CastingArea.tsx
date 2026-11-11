@@ -93,27 +93,28 @@ export const CastingArea: React.FC<CastingAreaProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
-      {/* Consultation Banner (Question) */}
-      <div className="w-full mb-6 p-4 rounded-xl bg-[#141419] border border-[#272733] text-[#F4F4F6] flex items-center justify-between gap-3 shadow-md">
-        <div className="flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B2B] shadow-[0_0_8px_#FF6B2B] shrink-0" />
-          <div>
-            <span className="text-[11px] uppercase tracking-wider text-[#A1A1B0] font-mono block">
-              Consulta en Curso
-            </span>
-            <p className="font-serif text-base sm:text-lg italic text-[#F4F4F6]">
-              {question ? `«${question}»` : 'Consulta abierta del momento presente'}
-            </p>
-          </div>
+      {/* Discreet Consultation Pill */}
+      <div className="w-full mb-4 flex items-center justify-center">
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#131318]/90 hover:bg-[#181822] border border-[#252533] text-xs text-[#A1A1B0] transition-colors shadow-xs max-w-full"
+          title={question ? `Consulta: ${question}` : 'Consulta abierta del momento presente'}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B] shadow-[0_0_6px_#FF6B2B] shrink-0" />
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#8E8E9E] font-semibold shrink-0">
+            Consulta actual:
+          </span>
+          <span className="font-serif italic text-[#E5E5EB] truncate max-w-[260px] sm:max-w-md md:max-w-lg">
+            {question ? `«${question}»` : 'Consulta abierta del presente'}
+          </span>
         </div>
       </div>
 
-      {/* Main Casting Container */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
-        {/* Left Column: Virtual 3 Coins Plate */}
-        <div className="md:col-span-7 bg-[#121216] border border-[#272733] rounded-xl p-5 sm:p-6 flex flex-col items-center shadow-xl">
+      {/* Main Casting Container: Coins Plate FIRST (order-1), Hexagram in Construction SECOND (order-2) */}
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-7 items-start">
+        {/* Virtual 3 Coins Plate (First at top of screen) */}
+        <div className="order-1 md:col-span-7 bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-xl">
           {/* Header indicator */}
-          <div className="w-full min-h-[46px] flex items-center justify-between pb-4 border-b border-[#232330] mb-5 gap-3">
+          <div className="w-full min-h-[42px] flex items-center justify-between pb-3.5 border-b border-[#232330] mb-4 gap-3">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-8 h-8 rounded-lg bg-[#1F1F2A] border border-[#353545] flex items-center justify-center font-mono font-bold text-sm text-[#FF6B2B] shrink-0">
                 {isComplete ? '6/6' : `${currentLineIndex + 1}/6`}
@@ -251,9 +252,9 @@ export const CastingArea: React.FC<CastingAreaProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Hexagram in Construction */}
-        <div className="md:col-span-5 bg-[#121216] border border-[#272733] rounded-xl p-5 sm:p-6 flex flex-col items-center shadow-xl">
-          <div className="w-full min-h-[46px] flex items-center justify-between pb-4 border-b border-[#232330] mb-5 gap-2">
+        {/* Hexagram in Construction (Second in reading order & below coins on mobile) */}
+        <div className="order-2 md:col-span-5 bg-[#121216] border border-[#272733] rounded-xl p-4 sm:p-5 flex flex-col items-center shadow-xl">
+          <div className="w-full min-h-[42px] flex items-center justify-between pb-3.5 border-b border-[#232330] mb-4 gap-2">
             <div className="flex items-center gap-2">
               <span className="text-xs uppercase tracking-wider text-[#A1A1B0] font-mono leading-none">
                 Construcción del Hexagrama
@@ -286,19 +287,25 @@ export const CastingArea: React.FC<CastingAreaProps> = ({
               </div>
             </div>
           ) : (
-            <div className="w-full h-64 border-2 border-dashed border-[#282836] rounded-xl flex flex-col items-center justify-center p-6 text-center text-[#71717A]">
-              <div className="w-12 h-12 rounded-full border border-[#38384A] bg-[#16161D] flex items-center justify-center mb-3 text-lg font-chinese text-[#FF6B2B]">
+            <div className="w-full py-7 px-4 border-2 border-dashed border-[#282836] rounded-xl flex flex-col items-center justify-center text-center text-[#71717A] bg-[#0E0E12]/50">
+              <div className="w-11 h-11 rounded-full border border-[#38384A] bg-[#16161D] flex items-center justify-center mb-2.5 text-lg font-chinese text-[#FF6B2B] shadow-inner">
                 卦
               </div>
-              <p className="text-sm text-[#F4F4F6] font-medium">El hexagrama aguarda la primera tirada.</p>
+              <p className="text-sm text-[#F4F4F6] font-medium">El hexagrama aguarda la primera tirada</p>
               <p className="text-xs text-[#8E8E9E] mt-1 max-w-xs">
                 La línea 1 se colocará en los cimientos (abajo) y ascenderá hasta la línea 6 (arriba).
               </p>
+              {/* Subtle 6 ghost lines preview */}
+              <div className="w-44 mt-3.5 space-y-1.5 opacity-35 pointer-events-none">
+                {[6, 5, 4, 3, 2, 1].map((pos) => (
+                  <div key={pos} className="h-1.5 rounded-full border border-dashed border-[#3E3E50] bg-[#1A1A22]" />
+                ))}
+              </div>
             </div>
           )}
 
           {/* Traditional rule reminder for beginners */}
-          <div className="w-full mt-5 p-3 rounded-lg bg-[#181820] border border-[#2B2B3A] text-xs text-[#A8A8B6] leading-relaxed">
+          <div className="w-full mt-4 p-3 rounded-lg bg-[#181820] border border-[#2B2B3A] text-xs text-[#A8A8B6] leading-relaxed">
             <strong className="text-[#F59E0B] flex items-center gap-1 mb-1">
               <Sparkles className="w-3.5 h-3.5" />
               ¿Qué pasa si sale una línea mutante?

@@ -259,7 +259,7 @@ export const TrigramsGuideModal: React.FC<TrigramsGuideModalProps> = ({
                     <span>El Juicio (Guà Cí / Tuan)</span>
                   </div>
                   <p className="text-[#A1A1B0] leading-relaxed">
-                    Atribuido al <strong className="text-[#D1D1DC]">Rey Wen</strong>, es el dictamen oracular central. Evalúa la conveniencia general del momento: si es oportuno emprender proyectos («cruzar las grandes aguas»), esperar, rectificar el rumbo o mantenerse firme en la perseverancia.
+                    Atribuido al <strong className="text-[#D1D1DC]">Rey Wen</strong>, es el dictamen o juicio central de la situación. Evalúa la conveniencia general del momento: si es oportuno emprender proyectos («cruzar las grandes aguas»), esperar, rectificar el rumbo o mantenerse firme en la perseverancia.
                   </p>
                 </div>
                 <div className="mt-3 pt-2.5 border-t border-[#232330] text-[11px] text-[#F59E0B] font-mono">
@@ -379,7 +379,7 @@ export const TrigramsGuideModal: React.FC<TrigramsGuideModalProps> = ({
               </div>
             </div>
 
-            {/* E. Guía de Síntesis Oracular */}
+            {/* E. Guía de Síntesis e Interpretación */}
             <div className="p-3.5 bg-[#14141A] border border-[#262635] rounded-xl text-xs space-y-2">
               <strong className="text-[#F4F4F6] text-xs flex items-center gap-1.5 font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#34D399]" />
